@@ -30,11 +30,15 @@ exports.validateRegistration = [
     .normalizeEmail(), // Canonicalize email address
 
   // Password
-  body('password')
+   body('password')
     .notEmpty().withMessage('Password is required.')
     .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long.')
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+-=[]{};':"\|,.<>\/?]).*$/)
-    .withMessage('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.'),
+    .matches(/[a-z]/).withMessage('Password must contain at least one lowercase letter.')
+    .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter.')
+    .matches(/\d/).withMessage('Password must contain at least one number.')
+    .matches(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>\/?]/).withMessage('Password must contain at least one special character.'),
+
+
 
   // Role (optional, if provided, must be valid)
   body('role')
