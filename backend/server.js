@@ -4,7 +4,9 @@ const dotenv = require('dotenv');   // For loading environment variables from a 
 const cors = require('cors');       // For enabling Cross-Origin Resource Sharing
 const authRoutes = require('./routes/authRoutes'); // Import the auth router
 const { errorHandler } = require('./middleware/errorMiddleware'); // Import the error router
-
+const rateLimit = require('express-rate-limit'); // Import express rate limit
+const helmet = require('helmet');
+const morgan = require('morgan');
 
 // 2. Load Environment Variables
 // This line loads variables from a .env file into process.env
@@ -16,6 +18,9 @@ const connectDB = require('./config/db');
 
 // 4. Initialize Express Application
 const app = express(); // Creates an instance of the Express application
+
+// Secure HTTP headers
+app.use(helmet()); // Sets various HTTP headers to help protect your app
 
 // 5. Connect to Database
 connectDB(); // Call the function to establish MongoDB connection
@@ -55,6 +60,34 @@ app.use(errorHandler);
 // Use the PORT environment variable if set, otherwise default to 5000.
 // process.env.PORT allows the hosting provider to set the port.
 const PORT = process.env.BACKEND_PORT || 5001; // Changed from PORT to BACKEND_PORT to avoid conflict with frontend
+
+// Apply rate limiting to API routes to prevent abuse
+// You can configure different limiters for different routes if needed
+const apiLimiter = rateLimit({
+  windowMs: process.env.RATE_LIMIT_WINDOW_MS || 15 * 60 * 1000, // 15 minutes
+  max: process.env.RATE_LIMIT_MAX_REQUESTS || 100, // Limit each IP to 100 requests per windowMs
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  message: { success: false, message: 'Too many requests from this IP, please try again after 15 minutes.' },
+});
+
+app.use('/api', apiLimiter); // Apply to all routes starting with /api
+
+// For more sensitive routes like login or password reset, you might want stricter limits:
+const authLimiter = rateLimit({
+    windowMs: 10 * 60 * 1000, // 10 minutes
+    max: 10, // Limit each IP to 10 auth attempts per window
+    message: { success: false, message: 'Too many authentication attempts from this IP, please try again after 10 minutes.' },
+    skipSuccessfulRequests: true, // Don't count successful auths against the limit
+});
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth/forgot-password', authLimiter);
+// app.use('/api/auth/register', authLimiter); // Also consider for registration
+
+// HTTP request logger middleware (only in development)
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev')); // 'dev' format gives colored status codes for quick visual feedback
+}
 
 // 11. Start the Server
 // The app.listen() function starts a UNIX socket and listens for connections on the specified path (or port).

@@ -1,6 +1,7 @@
 // backend/models/User.js
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs'); // For password hashing
+const crypto = require('crypto');
 
 const userSchema = new mongoose.Schema(
   {
@@ -114,8 +115,40 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
+// 3. Method to generate and set the email verification token
+userSchema.methods.getVerificationToken = function() {
+    // Generate a random 20-byte token (40 hex characters)
+    const verificationToken = crypto.randomBytes(20).toString('hex');
 
-// (We will add methods for generating tokens later here or in a separate service)
+    // Hash the token and set it to the schema field
+    // Store only the hashed token in the database for security
+    this.verificationToken = crypto.createHash('sha256').update(verificationToken).digest('hex');
+
+    // Set expiry for the token (e.g., 10 minutes from now)
+    // The expiry time will be in milliseconds
+    this.verificationTokenExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+
+    // Return the raw, unhashed token to be sent in the email
+    // This is the token the user will receive in the URL
+    return verificationToken;
+};
+
+// 4. Method to generate and set the password reset token
+userSchema.methods.getResetPasswordToken = function() {
+    // Generate a random 20-byte token (40 hex characters)
+    const resetToken = crypto.randomBytes(20).toString('hex');
+
+    // Hash the token and set it to the schema field
+    // Store only the hashed token in the database for security
+    this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+    // Set expiry for the token (e.g., 10 minutes from now)
+    this.passwordResetExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+
+    // Return the raw, unhashed token to be sent in the email
+    // This is the token the user will receive in the URL
+    return resetToken;
+};
 
 // Create and export the User model
 // Mongoose will create a collection named 'users' (pluralized, lowercase)
