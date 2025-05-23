@@ -60,12 +60,12 @@ exports.registerUser = async (req, res, next) => {
       // Construct verification URL (frontend will handle this page)
       // IMPORTANT: Use your frontend's URL here, not backend API URL
       const verificationUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify-email/${rawVerificationToken}`;
-      const backendVerificationUrl = `http://localhost:5001/api/auth/verify-email/${rawVerificationToken}`;
+      // const backendVerificationUrl = `http://localhost:5001/api/auth/verify-email/${rawVerificationToken}`;
 
       const emailMessage = `
         <h2>Thank you for registering with SecureAuth!</h2>
         <p>Please verify your email address by clicking the link below:</p>
-        <p><a href="${backendVerificationUrl}" target="_blank">Verify Email Address</a></p>
+        <p><a href="${verificationUrl}" target="_blank">Verify Email Address</a></p>
         <p>This link will expire in 24 hours.</p>
         <p>If you did not register for this account, please ignore this email.</p>
       `;
@@ -74,7 +74,7 @@ exports.registerUser = async (req, res, next) => {
         email: newUser.email,
         subject: 'Verify Your Email Address - SecureAuth App',
         html: emailMessage,
-        text: `Please verify your email by visiting this link: ${backendVerificationUrl}` // Fallback text
+        text: `Please verify your email by visiting this link: ${verificationUrl}` // Fallback text
       });
 
       // Generate a token upon successful registration

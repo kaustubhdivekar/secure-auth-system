@@ -88,11 +88,11 @@ exports.validateForgotPassword = [
 
 // Validation rules for Reset Password
 exports.validateResetPassword = [
-  body('email')
-    .trim()
-    .notEmpty().withMessage('Email is required.')
-    .isEmail().withMessage('Please provide a valid email address.')
-    .normalizeEmail(),
+  // body('email')
+  //   .trim()
+  //   .notEmpty().withMessage('Email is required.')
+  //   .isEmail().withMessage('Please provide a valid email address.')
+  //   .normalizeEmail(),
   body('newPassword') // Assuming the new password field in the request body is 'newPassword'
     .notEmpty().withMessage('New password is required.')
     .isLength({ min: 8 }).withMessage('New password must be at least 8 characters long.')
