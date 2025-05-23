@@ -118,5 +118,5 @@ if (process.env.NODE_ENV === 'development') {
 //   console.log('Press Ctrl+C to stop the server.');
 // });
 app.listen(PORT, () => {
-    console.log(`Backend server is running in {process.env.NODE_ENV} mode on http://localhost:{PORT}`);
+    console.log(`Backend server is running in ${process.env.NODE_ENV} mode on http://localhost:${PORT}`);
 });
