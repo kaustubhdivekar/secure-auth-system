@@ -1,0 +1,60 @@
+.navbar {
+  background-color: var(--navbar-bg);
+  padding: 15px 0; /* Adjust padding */
+  border-bottom: 1px solid #2a2a2a; /* Subtle border */
+}
+
+.navContainer {
+  max-width: 1200px; /* Or your preferred max-width */
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--navbar-logo-color);
+  text-decoration: none;
+  /* If using an image: display: block; height: 40px; */
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 25px; /* Space between links */
+}
+
+.navLink {
+  color: var(--text-color-navbar-link);
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 8px 12px; /* Padding for hover/active state */
+  border-radius: var(--border-radius-input); /* Consistent border radius */
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.navLink:hover {
+  color: var(--text-color-navbar-link-hover);
+  background-color: rgba(255, 255, 255, 0.05); /* Subtle hover */
+}
+
+.activeNavLink {
+  background-color: var(--navbar-active-link-bg);
+  color: var(--navbar-active-link-text) !important; /* Ensure override */
+  font-weight: 500;
+}
+
+.logoutButton {
+  background-color: transparent;
+  border: 1px solid var(--accent-gradient-start);
+  color: var(--accent-gradient-start);
+}
+.logoutButton:hover {
+  background-color: var(--accent-gradient-start);
+  color: var(--button-primary-text);
+}

@@ -1,0 +1,62 @@
+/* src/pages/HomePage.module.css */
+.homeContainer {
+  padding-top: calc(var(--navbar-height) + var(--spacing-unit) * 4); /* Account for fixed navbar */
+  text-align: center;
+}
+
+.heroSection {
+  padding: calc(var(--spacing-unit) * 6) 0;
+  /* background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('your-hero-image.jpg');
+  background-size: cover;
+  background-position: center; */
+  border-bottom: 1px solid var(--color-input-border);
+}
+
+.heroTitle {
+  font-size: 2.8rem;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-unit);
+  font-weight: var(--font-weight-bold);
+}
+
+.heroSubtitle {
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  margin-bottom: calc(var(--spacing-unit) * 4);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.authActions, .loggedInActions {
+  display: flex;
+  justify-content: center;
+  gap: calc(var(--spacing-unit) * 2);
+  align-items: center;
+}
+.loggedInActions p {
+  margin-bottom: var(--spacing-unit);
+}
+.loggedInActions {
+  flex-direction: column;
+}
+
+
+.heroButton {
+  padding: calc(var(--spacing-unit) * 1.25) calc(var(--spacing-unit) * 3);
+  font-size: 1rem;
+}
+
+.featuresSection {
+  padding: calc(var(--spacing-unit) * 5) 0;
+}
+.featuresSection h2 {
+  font-size: 2rem;
+  margin-bottom: calc(var(--spacing-unit) * 3);
+}
+.feature {
+  background-color: var(--color-form-background-inner);
+  padding: var(--spacing-unit);
+  margin-bottom: var(--spacing-unit);
+  border-radius: var(--border-radius-input);
+}

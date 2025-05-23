@@ -1,0 +1,132 @@
+// src/pages/Auth/RegisterPage.jsx
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import authService from '../../services/authService';
+import styles from './AuthPages.module.css';
+import AuthLayout from '../../components/layout/AuthLayout';
+import InputField from '../../components/common/InputField/InputField';
+import Button from '../../components/common/Button/Button';
+import PasswordStrengthIndicator from '../../components/ui/PasswordStrengthIndicator/PasswordStrengthIndicator';
+import { FaUserAlt, FaEnvelope, FaLock, FaBriefcase } from 'react-icons/fa'; // Example icons
+
+const VALID_ROLES = ['Buyer', 'Tenant', 'Owner', 'User', 'Admin', 'Content Creator'];
+
+const RegisterPage = () => {
+  const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm({
+    defaultValues: { role: 'User' },
+  });
+  const navigate = useNavigate();
+  const [serverError, setServerError] = useState(null);
+  const passwordValue = watch('password', '');
+
+  const onSubmit = async (data) => {
+    setServerError(null);
+    if (data.password !== data.confirmPassword) {
+      toast.error('Passwords do not match.');
+      setServerError('Passwords do not match.');
+      return;
+    }
+    try {
+      const payload = {
+        username: data.username,
+        email: data.email,
+        password: data.password,
+        role: data.role,
+        firstName: data.firstName,
+        lastName: data.lastName,
+      };
+      const response = await authService.register(payload);
+      if (response.success) {
+        toast.success(response.message || 'Registration successful! Please check your email to verify.');
+        navigate('/login');
+      } else {
+        setServerError(response.message || 'Registration failed.');
+        toast.error(response.message || 'Registration failed.');
+      }
+    } catch (error) {
+      const errMsg = error.response?.data?.message || error.message || 'An unexpected registration error occurred.';
+      setServerError(errMsg);
+      toast.error(errMsg);
+    }
+  };
+
+  return (
+    <AuthLayout>
+      <div className={styles.authFormContainerWithGradientBorder}>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.authForm} noValidate>
+          <h2 className={styles.title}>Create Account</h2>
+          {serverError && <p className={styles.serverError}>{serverError}</p>}
+
+          <InputField
+            id="username"
+            placeholder="Username"
+            icon={<FaUserAlt />}
+            error={errors.username?.message}
+            {...register('username', {
+              required: 'Username is required',
+              minLength: { value: 3, message: 'Username must be at least 3 characters' },
+            })}
+          />
+          <InputField
+            id="email"
+            type="email"
+            placeholder="Email Address"
+            icon={<FaEnvelope />}
+            error={errors.email?.message}
+            {...register('email', {
+              required: 'Email is required',
+              pattern: { value: /^\S+@\S+\.\S+$/, message: 'Invalid email address' },
+            })}
+          />
+          <InputField
+            id="password"
+            type="password"
+            placeholder="Password"
+            icon={<FaLock />}
+            error={errors.password?.message}
+            {...register('password', {
+              required: 'Password is required',
+              minLength: { value: 8, message: 'Password must be at least 8 chars' },
+              pattern: {
+                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]).*$/,
+                message: 'Needs upper, lower, num, special char.',
+              },
+            })}
+          />
+          {passwordValue && <PasswordStrengthIndicator password={passwordValue} />}
+          <InputField
+            id="confirmPassword"
+            type="password"
+            placeholder="Confirm Password"
+            icon={<FaLock />}
+            error={errors.confirmPassword?.message}
+            {...register('confirmPassword', {
+              required: 'Please confirm your password',
+              validate: (value) => value === passwordValue || 'Passwords do not match',
+            })}
+          />
+          <div className={styles.inputGroup}> {/* For select styling */}
+            {/* <FaBriefcase className={styles.selectIcon} />  You'd need to style this */ }
+            <select id="role" className={styles.selectField} {...register('role', { required: 'Role is required' })}>
+              {VALID_ROLES.map(r => <option key={r} value={r}>{r}</option>)}
+            </select>
+            {errors.role && <p className={styles.errorMessage}>{errors.role.message}</p>}
+          </div>
+          {/* Optional Fields */}
+          <InputField id="firstName" placeholder="First Name (Optional)" {...register('firstName')} />
+          <InputField id="lastName" placeholder="Last Name (Optional)" {...register('lastName')} />
+
+          <Button type="submit" disabled={isSubmitting} className={styles.submitButtonFullWidth}>
+            {isSubmitting ? 'Registering...' : 'Create Account'}
+          </Button>
+          <p className={styles.authLinkMuted}>
+            Already have an account? <Link to="/login" className={styles.authLinkHighlight}>Login</Link>
+          </p>
+        </form>
+      </div>
+    </AuthLayout>
+  );
+};
+export default RegisterPage;

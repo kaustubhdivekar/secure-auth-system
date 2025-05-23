@@ -1,0 +1,128 @@
+/* src/pages/Auth/AuthPages.module.css */
+.fullPageCentered {
+  /* Add this if not using AuthLayout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px); /* Adjust 80px based on navbar height */
+  padding: 20px;
+}
+
+.authFormContainerWithGradientBorder {
+  background-color: var(--background-color-dark); /* Or a slightly different shade */
+  padding: 3px; /* Thickness of the border */
+  border-radius: 25px; /* Match the UI's rounded corners */
+  background-image: linear-gradient(
+    135deg,
+    var(--accent-gradient-start),
+    var(--accent-gradient-end)
+  );
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px; /* Or as per your design */
+}
+
+.authForm {
+  background-color: var(--background-color-dark); /* Inner background */
+  padding: 30px 40px; /* Inner padding */
+  border-radius: 22px; /* Slightly less than outer to show border */
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  text-align: center;
+  color: var(--text-color-light);
+  margin-bottom: 25px;
+  font-size: 2rem;
+  font-weight: 300; /* Lighter font weight as in UI */
+}
+
+.inputGroup {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-color-muted);
+  font-size: 1.1rem; /* Adjust as needed */
+}
+
+.inputField {
+  width: 100%;
+  padding: 12px 15px 12px 45px; /* Padding to make space for icon */
+  background-color: var(--input-background);
+  border: 1px solid var(--input-border-color);
+  border-radius: 10px; /* Rounded inputs */
+  color: var(--text-color-light);
+  font-size: 1rem;
+}
+.inputField:focus {
+  outline: none;
+  border-color: var(--accent-gradient-start);
+  box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.3); /* Focus glow */
+}
+.inputError {
+  /* Style for input field when there's an error */
+  border-color: var(--danger-color);
+}
+
+.submitButton {
+  background-color: var(--accent-gradient-start); /* Solid color for button */
+  color: var(--button-primary-text);
+  padding: 12px 20px;
+  border: none;
+  border-radius: 20px; /* More rounded button */
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.submitButton:hover {
+  background-color: #00e0e0; /* Slightly lighter cyan */
+}
+.submitButton:disabled {
+  background-color: var(--secondary-color);
+  cursor: not-allowed;
+}
+
+.linksContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.authLink {
+  color: var(--text-color-muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+.authLink:hover {
+  color: var(--accent-gradient-start);
+  text-decoration: underline;
+}
+
+.errorMessage {
+  /* For react-hook-form errors */
+  color: var(--danger-color);
+  font-size: 0.85rem;
+  margin-top: -15px; /* Adjust to position under input */
+  margin-bottom: 10px;
+  padding-left: 5px;
+}
+.serverError {
+  /* For server-side errors */
+  color: var(--danger-color);
+  background-color: rgba(220, 53, 69, 0.1);
+  border: 1px solid var(--danger-color);
+  padding: 10px;
+  border-radius: var(--border-radius);
+  margin-bottom: 20px;
+  text-align: center;
+}
