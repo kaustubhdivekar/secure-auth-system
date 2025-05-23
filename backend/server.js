@@ -11,7 +11,7 @@ const morgan = require('morgan');
 // 2. Load Environment Variables
 // This line loads variables from a .env file into process.env
 // Should be done early, especially before database connections or port configurations
-dotenv.config(); // By default, it looks for a .env file in the root of the project
+dotenv.config({ path: './.env' }); // By default, it looks for a .env file in the root of the project
 
 // 3. Import Database Connection Function (we'll create this soon)
 const connectDB = require('./config/db');
@@ -28,7 +28,29 @@ connectDB(); // Call the function to establish MongoDB connection
 // 6. Middleware Setup
 // Enable CORS for all routes and origins (for development).
 // For production, you might want to configure specific origins.
-app.use(cors());
+// app.use(cors());
+// Configure CORS
+const allowedOrigins = [
+    'http://localhost:5173', // Your frontend local development URL
+    'http://localhost:3000', // Common for Create React App local dev
+    // !! Add your Vercel frontend URL here AFTER deployment !!
+    // Example: 'https://your-frontend-app-name.vercel.app'
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Allow cookies to be sent
+    optionsSuccessStatus: 204
+}));
 
 // Express middleware to parse JSON request bodies.
 // When the frontend sends JSON data (e.g., in a POST request),
@@ -41,7 +63,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // 7. Define a Simple Test Route
 // A GET request to the root URL ('/') of our API
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
   // req: request object (contains info about the incoming request)
   // res: response object (used to send a response back to the client)
   res.status(200).json({ message: 'Welcome to the Secure Auth System API!' });
@@ -59,7 +81,7 @@ app.use(errorHandler);
 // 10. Define the Port
 // Use the PORT environment variable if set, otherwise default to 5000.
 // process.env.PORT allows the hosting provider to set the port.
-const PORT = process.env.BACKEND_PORT || 5001; // Changed from PORT to BACKEND_PORT to avoid conflict with frontend
+const PORT = process.env.PORT || 5001; // Changed from PORT to BACKEND_PORT to avoid conflict with frontend
 
 // Apply rate limiting to API routes to prevent abuse
 // You can configure different limiters for different routes if needed
@@ -91,7 +113,10 @@ if (process.env.NODE_ENV === 'development') {
 
 // 11. Start the Server
 // The app.listen() function starts a UNIX socket and listens for connections on the specified path (or port).
+// app.listen(PORT, () => {
+//   console.log(`Backend server is running in ${process.env.NODE_ENV || 'development'} mode on http://localhost:${PORT}`);
+//   console.log('Press Ctrl+C to stop the server.');
+// });
 app.listen(PORT, () => {
-  console.log(`Backend server is running in ${process.env.NODE_ENV || 'development'} mode on http://localhost:${PORT}`);
-  console.log('Press Ctrl+C to stop the server.');
+    console.log(`Backend server is running in {process.env.NODE_ENV} mode on http://localhost:{PORT}`);
 });
