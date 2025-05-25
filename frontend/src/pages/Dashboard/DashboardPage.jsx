@@ -12,6 +12,7 @@ const DashboardPage = () => {
   const { token, isLoading: isAuthContextLoading } = useAuth();
   const [profile, setProfile] = useState(null); // Start with null, fetch fresh data
   const [isProfileLoading, setIsProfileLoading] = useState(true); // Specific loading for this page's data
+  const [isResending, setIsResending] = useState(false); // State for managing button loading state
 
   useEffect(() => {
     const fetchDashboardProfile = async () => {
@@ -50,6 +51,28 @@ const DashboardPage = () => {
     // token: Run if the token changes (e.g., after login or logout).
   }, [isAuthContextLoading, token]); // *** CRITICAL: Corrected dependency array ***
 
+  // Handler for the resend verification email button
+  const handleResendVerification = async () => {
+    // Prevent resending if no profile or email, or if already sending
+    if (!profile || !profile.email || isResending) return;
+
+    setIsResending(true); // Disable button
+    try {
+      // Call the new service function to resend the email
+      const response = await authService.resendVerificationEmail(profile.email);
+      if (response.success) {
+        toast.success(response.message || 'Verification email sent successfully! Please check your inbox.');
+      } else {
+        toast.error(response.message || 'Failed to send verification email.');
+      }
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Error sending verification email.';
+      toast.error(errorMessage);
+    } finally {
+      setIsResending(false); // Re-enable button
+    }
+  };
+
   // Display loading indicators based on the sequence of operations
   if (isAuthContextLoading) {
     return <div className={styles.loading}>Initializing session...</div>;
@@ -82,7 +105,17 @@ const DashboardPage = () => {
         <h2 className={styles.greeting}>Welcome, {profile.username || profile.email}!</h2>
         <p><strong>Email:</strong> {profile.email}</p>
         <p><strong>Role:</strong> {profile.role}</p>
-        <p><strong>Account Verified:</strong> {profile.isVerified ? 'Yes' : 'No'}</p>
+        <p><strong>Account Verified:</strong> {profile.isVerified ? 'Yes' : 'No'}
+            {/* Conditionally render resend button if account is NOT verified */}
+            {!profile.isVerified && (
+              <button
+                onClick={handleResendVerification}
+                disabled={isResending}
+                className={styles.resendButton}
+              >
+                {isResending ? 'Sending...' : 'Resend Verification Email'}
+              </button>
+            )}</p>
         {profile.firstName && <p><strong>Name:</strong> {profile.firstName} {profile.lastName || ''}</p>}
         <p><strong>Joined:</strong> {profile.createdAt ? new Date(profile.createdAt).toLocaleDateString() : 'N/A'}</p>
       </div>

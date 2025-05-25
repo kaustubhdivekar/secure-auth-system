@@ -28,7 +28,32 @@
   margin-bottom: var(--spacing-unit);
 }
 
+.resendButton {
+  margin-left: 15px; /* Spacing from the "Yes/No" text */
+  padding: 8px 15px;
+  background-color: #007bff; /* Example blue color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease;
+  white-space: nowrap; /* Prevent button text from wrapping */
+}
+
+.resendButton:hover:not(:disabled) {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.resendButton:disabled {
+  background-color: #cccccc; /* Greyed out when disabled */
+  cursor: not-allowed;
+}
+
 .profileCard p {
+  display: flex;
+   align-items: center; /* Vertically align items in the paragraph */
+  flex-wrap: wrap; /* Allow wrapping if content is too long */
   font-size: 1rem;
   color: var(--color-text-secondary);
   margin-bottom: calc(var(--spacing-unit) * 1.25);

@@ -31,12 +31,17 @@ const getCurrentUser = async () => {
   return response.data; // { success: boolean, user: object }
 };
 
+const resendVerificationEmail = async (email) => {
+    const response = await apiClient.post('/auth/resend-verification-email', { email });
+    return response.data; // Expected: { success: boolean, message: string }
+};
+
 // Expose setAuthToken through authService if needed elsewhere, or use it internally in apiClient
 const setAuthToken = (token) => {
     setApiClientAuthToken(token);
 };
 
 const authService = {
-  register, login, verifyEmail, forgotPassword, resetPassword, getCurrentUser, setAuthToken
+  register, login, verifyEmail, forgotPassword, resetPassword, getCurrentUser, setAuthToken, resendVerificationEmail
 };
 export default authService;
