@@ -33,7 +33,7 @@ connectDB(); // Call the function to establish MongoDB connection
 const allowedOrigins = [
     'http://localhost:5173', // Your frontend local development URL
     'http://localhost:3000', // Common for Create React App local dev
-    'https://secure-auth-system-gnf2vvlvk-kaustubh-divekar-projects.vercel.app/'
+    'https://secure-auth-system-gnf2vvlvk-kaustubh-divekar-projects.vercel.app/',
     'https://secure-auth-system-mu.vercel.app' // Vercel frontend URL AFTER deployment
 ];
 
