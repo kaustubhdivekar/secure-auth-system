@@ -306,8 +306,9 @@ exports.resendVerificationEmail = async (req, res, next) => {
         await user.save(); // Save the user with the new token and expiry
 
         // Create the verification URL using the RAW token (for the link)
-        const verificationUrl = `${req.protocol}://${req.get('host')}/api/auth/verify-email/${verificationToken}`; // Or your frontend URL
-        
+        // const verificationUrl = `${req.protocol}://${req.get('host')}/api/auth/verify-email/${verificationToken}`;
+        const verificationUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify-email/${verificationToken}`;
+
         const resendEmailMessage = `
             <h2>New Email Verification Link for Your Account</h2>
             <p>You requested a new email verification link for your SecureAuth account.</p>
