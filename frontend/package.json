@@ -2,6 +2,7 @@
   "name": "to-let-globe-frontend",
   "private": true,
   "version": "1.0.0",
+  "description": "Frontend for the To-Let Globe application",
   "type": "module",
   "scripts": {
     "dev": "vite --open",

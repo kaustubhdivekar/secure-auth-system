@@ -1,93 +1,59 @@
-# To Let Globe - Full Stack Application (Monorepo) 
+```markdown
+# To-Let Globe
 
-**Version:** 1.0.0
-**Last Updated:** May 25, 2025
-**Live Frontend (Vercel):** [https://secure-auth-system-kaustubh-divekar-projects.vercel.app/](https://secure-auth-system-kaustubh-divekar-projects.vercel.app/)
-**Live Backend API (Render):** [https://secure-auth-system-a29n.onrender.com/](https://secure-auth-system-a29n.onrender.com/)
-This repository contains the complete source code for a full-stack Secure Authentication System, structured as a monorepo with a Node.js/Express.js backend and a React.js/JavaScript frontend. It demonstrates robust authentication flows including JWT management, email verification, password reset, and role-based access.
+**Version: 1.0.0**
+**Last Updated: May 30, 2025**
 
----
-
-## Table of Contents
-
-1.  [Project Overview](#project-overview)
-2.  [Features](#features)
-3.  [Tech Stack](#tech-stack)
-4.  [Monorepo Structure](#monorepo-structure)
-5.  [Prerequisites](#prerequisites)
-6.  [Local Development Setup](#local-development-setup)
-7.  [API Endpoints Overview](#api-endpoints-overview)
-8.  [Key Frontend Pages](#key-frontend-pages)
-9.  [Environment Variables Details](#environment-variables-details)
-10. [Deployment Instructions](#deployment-instructions)
-11. [Testing](#testing)
-12. [Code Quality & Conventions](#code-quality--conventions)
-13. [Contributing](#contributing)
-14. [License](#license)
+This repository contains the complete source code for To-Let Globe, a full-stack application designed for property listings and tenant/landlord interactions. Structured as a monorepo, it features a robust Node.js/Express.js backend and a dynamic React.js/JavaScript frontend. The system includes comprehensive user authentication, secure data handling, and essential communication features like a contact form with persistent storage.
 
 ---
 
-<details>
-<summary>
-  <h2>1. Project Overview </h2>
-</summary>
+## 🚀 Project Overview
 
-This monorepo houses a full-stack application designed to provide a secure, flexible, and modern authentication system. It features a decoupled backend API and a responsive React frontend, showcasing best practices in JWT handling, email-based account management, and secure data processing. The frontend implements a dark theme with cyan/gold accents as per the provided UI samples.
-
-</details>
+To-Let Globe is built to facilitate the renting and leasing process, providing a secure, flexible, and modern platform for users. It showcases a decoupled backend API and a responsive React frontend, demonstrating best practices in JWT handling, email-based account management, secure data processing, and integrated communication features. The frontend implements a sleek dark theme with cyan/gold accents, aligning with modern UI/UX principles.
 
 ---
 
-<details>
-<summary>
-  <h2>2. Features </h2>
-</summary>
+## ✨ Features
 
-### Backend Features
+### Backend Highlights
+* **User Authentication:** Secure user registration with `bcryptjs` hashing, JWT-based login/session management.
+* **Account Management:** Email verification with unique, expiring tokens; robust password reset functionality.
+* **Authorization:** Role-Based Access Control (RBAC) middleware for protected API routes.
+* **Data Handling:** Centralized error handling, input validation (`express-validator`).
+* **Security:** `helmet` for HTTP header security, `express-rate-limit` for brute-force protection.
+* **Communication:** Integrated email service (Nodemailer) for verification, password resets, and contact form confirmations/notifications.
+* **Contact Form Module:**
+    * **Persistent Storage:** Saves all contact messages securely to MongoDB.
+    * **Automated Notifications:** Sends a confirmation email to the user upon submission and a notification email to the configured admin address.
+* **CORS Configuration:** Seamless cross-origin communication between frontend and backend.
 
-* User Registration with secure password hashing (bcryptjs).
-* Email Verification via unique, expiring tokens.
-* Login with JWT (JSON Web Token) generation and validation.
-* Password Reset functionality via email.
-* Role-Based Access Control (RBAC) middleware.
-* Protected API routes.
-* Input validation and centralized error handling.
-* Security enhancements: `helmet` for headers, `express-rate-limit` for brute-force protection.
-* CORS configuration.
-
-### Frontend Features
-
-* User-friendly forms for Registration, Login, Forgot Password, and Reset Password, matching the provided UI design.
-* Client-side routing with React Router.
-* JWT stored in `localStorage` and automatically sent with API requests.
-* Global authentication state management via React Context.
-* Protected routes redirecting unauthenticated users.
-* Dashboard for authenticated users to view profile information.
-* Notifications/Toasts for user feedback.
-* Responsive dark-theme design with cyan/gold accents.
-
-</details>
+### Frontend Highlights
+* **User Interface:** User-friendly forms for Registration, Login, Forgot Password, and Reset Password, adhering to a modern dark theme with distinct cyan/gold accents.
+* **User Experience:** Client-side routing with React Router, JWT stored in `localStorage` for automatic API authentication, global authentication state management via React Context.
+* **Protected Routes:** Ensures only authenticated and authorized users can access specific areas.
+* **Dashboard:** Personalized user dashboard for profile management.
+* **Notifications:** React Toastify for clear user feedback and alerts.
+* **Responsiveness:** Designed to provide a seamless experience across various devices.
+* **Property Display (Future):** Layouts and initial components for displaying property listings.
+* **Add Property (Future):** User interface elements for adding new property listings.
 
 ---
 
-<details>
-<summary>
-  <h2>3. Tech Stack </h2>
-</summary>
+## 💻 Tech Stack
 
 ### Backend
-
 * **Runtime:** Node.js
 * **Framework:** Express.js
-* **ODM:** Mongoose
+* **ODM:** Mongoose (for MongoDB interaction)
 * **Authentication:** `jsonwebtoken`, `bcryptjs`
 * **Email:** Nodemailer
 * **Validation:** `express-validator`
 * **Security:** `helmet`, `express-rate-limit`
+* **Environment:** `dotenv`
 
 ### Frontend
-
-* **Library/Framework:** React.js (JavaScript)
+* **Library/Framework:** React.js
 * **Build Tool:** Vite
 * **Routing:** React Router DOM
 * **API Client:** Axios
@@ -98,273 +64,303 @@ This monorepo houses a full-stack application designed to provide a secure, flex
 * **Styling:** CSS Modules, Global CSS with Variables
 
 ### Database
-
-* MongoDB (via MongoDB Atlas for cloud hosting)
+* **MongoDB:** NoSQL database (hosted via MongoDB Atlas for cloud accessibility).
 
 ### Deployment
-
 * **Backend:** Render
 * **Frontend:** Vercel
-* **Database:** MongoDB Atlas
-
-</details>
 
 ---
 
-<details>
-<summary>
-  <h2>4. Monorepo Structure </h2>
-</summary>
+## 📂 Monorepo Structure
 
-secure-auth-system/
-├── backend/                  # Node.js Backend Application
-│   ├── config/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   ├── utils/
-│   ├── .env.example
-│   ├── package.json
-│   └── server.js
-├── frontend/                 # React Frontend Application
-│   ├── public/
-│   ├── src/
-│   │   ├── assets/
-│   │   ├── components/
-│   │   ├── contexts/
-│   │   ├── hooks/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   └── styles/
-│   ├── .env.example
-│   ├── index.html
-│   ├── package.json
-│   └── vite.config.js
-├── .gitignore                # Root gitignore (can include common ignores and backend/frontend specifics)
-└── README.md                 # This file (Monorepo Root README)
+```
 
+to-let-globe/
+├── backend/                  \# Node.js Express.js Backend Application
+│   ├── config/               \# Database connection, security configs
+│   ├── controllers/          \# Business logic for routes
+│   ├── middleware/           \# Auth, error handling, rate limiting
+│   ├── models/               \# Mongoose schemas (User, Contact, etc.)
+│   ├── routes/               \# API endpoint definitions
+│   ├── utils/                \# Email service, JWT helpers
+│   ├── .env.example          \# Example environment variables for backend
+│   ├── package.json          \# Backend dependencies and scripts
+│   └── server.js             \# Main backend entry point
+├── frontend/                 \# React.js Frontend Application
+│   ├── public/               \# Static assets
+│   ├── src/                  \# React source code
+│   │   ├── assets/           \# Images, custom SVGs
+│   │   ├── components/       \# Reusable UI components
+│   │   ├── contexts/         \# React Context for global state (e.g., Auth)
+│   │   ├── hooks/            \# Custom React hooks
+│   │   ├── pages/            \# Page-level components (Login, Dashboard, Contact)
+│   │   ├── services/         \# API integration services
+│   │   └── styles/           \# Global CSS, theme variables, CSS modules
+│   │   ├── App.jsx           \# Main application component with routing
+│   │   └── main.jsx          \# Application entry point
+│   ├── .env.example          \# Example environment variables for frontend
+│   ├── index.html            \# Main HTML page
+│   ├── package.json          \# Frontend dependencies and scripts
+│   └── vite.config.js        \# Vite build configuration
+├── .gitignore                \# Global Git ignore rules
+└── README.md                 \# This file (Monorepo Root README)
 
-*(Consider using a root `package.json` with workspaces if you plan to manage dependencies or run scripts for both projects from the root, e.g., using npm workspaces, yarn workspaces, or pnpm).*
-
-</details>
+````
 
 ---
 
-<details>
-<summary>
-  <h2>5. Prerequisites </h2>
-</summary>
+## ⚙️ Prerequisites
 
-* **Node.js** (v18.x or later recommended).
-* **npm** (v8.x or later) or yarn/pnpm.
-* **Git**.
-* A **MongoDB Atlas account** (free tier available).
-* A **Render account** (free tier available).
-* A **Vercel account** (free tier available).
-* A **transactional email service provider** (e.g., SendGrid, Mailgun for production emails) or Ethereal.email for development.
+Before you begin, ensure you have the following installed:
 
-</details>
+* **Node.js:** v18.x or later (includes npm).
+* **Git:** Download & Install Git.
+* **A MongoDB Atlas account:** Sign up for a free tier.
+* **A Render account:** Sign up for a free tier.
+* **A Vercel account:** Sign up for a free tier.
+* **A transactional email service provider** (e.g., SendGrid, Mailgun for production emails) or [Ethereal.email](https://ethereal.email/) for development testing.
 
 ---
 
-<details>
-<summary>
-  <h2>6. Local Development Setup </h2>
-</summary>
+## 🚀 Local Development Setup
 
-### Clone Repository
+Follow these steps to get the To-Let Globe application running on your local machine.
+
+### 1. Clone the Repository
+
+First, clone the monorepo to your local machine:
 
 ```bash
-git clone <https://github.com/kaustubhdivekar/secure-auth-system>
-cd secure-auth-system
-Environment Variables
-You will need to set up .env files for both the backend and frontend applications separately.
+git clone [https://github.com/your-username/to-let-globe.git](https://github.com/your-username/to-let-globe.git)
+cd to-let-globe
+````
 
-Backend Environment (backend/.env):
+**Note:** Replace `your-username` with your actual GitHub username.
 
-Navigate to the backend directory:
+### 2\. Environment Variables Setup
 
-Bash
+You will need to set up `.env` files for both the backend and frontend applications separately. These files will contain sensitive information and local configurations.
 
+#### Backend Environment (`backend/.env`)
+
+Navigate into the backend directory:
+
+```bash
 cd backend
+```
+
+Copy the example environment file:
+
+```bash
 cp .env.example .env
-Edit backend/.env with your local MongoDB URI, JWT secret, email provider credentials, and FRONTEND_URL (e.g., http://localhost:5173 for Vite dev).
+```
 
-Frontend Environment (frontend/.env):
+Open the newly created `.env` file and fill in your details:
 
-Navigate to the frontend directory:
+  * **`MONGODB_URI`**: Your MongoDB Atlas connection string.
+  * **`JWT_SECRET`**: A very strong, random secret string for JWT signing.
+  * **`ETHEREAL_USER`, `ETHEREAL_PASS`**: Your Ethereal.email credentials for development emails.
+  * **`ADMIN_EMAIL`**: An email address to receive contact form notifications (can be another Ethereal.email for dev).
+  * **`FRONTEND_URL`**: `http://localhost:5173` (for local frontend development).
 
-Bash
+#### Frontend Environment (`frontend/.env`)
 
-cd ../frontend # (from backend folder) or cd frontend (from root)
+Navigate into the frontend directory (from the backend directory, use `cd ../frontend`, or from the root, use `cd frontend`):
+
+```bash
+cd ../frontend # or cd frontend
+```
+
+Copy the example environment file:
+
+```bash
 cp .env.example .env
-Edit frontend/.env with VITE_API_BASE_URL (e.g., http://localhost:5001/api if your backend runs on port 5001).
+```
 
-Backend Setup
-Navigate to the backend directory:
+Open the newly created `.env` file and fill in your details:
 
-Bash
+  * **`VITE_API_BASE_URL`**: `http://localhost:5001/api` (assuming your backend runs on port 5001).
 
-cd backend # (if not already there)
+### 3\. Install Dependencies & Run Services
+
+You will need two separate terminal windows/tabs: one for the backend and one for the frontend.
+
+#### Backend Setup
+
+In your first terminal, navigate to the backend directory:
+
+```bash
+cd to-let-globe/backend
+```
+
 Install dependencies:
 
-Bash
-
+```bash
 npm install
-Run the backend server (typically on port 5001):
+```
 
-Bash
+Run the backend server:
 
+```bash
 npm run dev
-Frontend Setup
-Navigate to the frontend directory (in a new terminal window/tab):
+```
 
-Bash
+The backend server will typically run on `http://localhost:5001`.
 
-cd frontend # (if not already there)
+#### Frontend Setup
+
+In your second terminal, navigate to the frontend directory:
+
+```bash
+cd to-let-globe/frontend
+```
+
 Install dependencies:
 
-Bash
-
+```bash
 npm install
-Run the frontend development server (typically on port 5173):
+```
 
-Bash
+Run the frontend development server:
 
+```bash
 npm run dev
-Running Both Services Concurrently
-You will need two separate terminal windows: one for the backend (npm run dev in backend/) and one for the frontend (npm run dev in frontend/).
-Access the frontend application in your browser (e.g., http://localhost:5173). It will make API calls to your local backend.
+```
 
-&lt;/details>
+The frontend application will typically be available at `http://localhost:5173`.
 
-&lt;details>
-&lt;summary>
-&lt;h2>7. API Endpoints Overview &lt;/h2>
-&lt;/summary>
+### 4\. Access the Application
 
-The backend exposes RESTful APIs under the /api prefix. Key authentication routes include:
+Once both services are running, open your web browser and go to: `http://localhost:5173`
 
-POST /api/auth/register
-POST /api/auth/login
-GET /api/auth/verify-email/:token
-POST /api/auth/forgot-password
-POST /api/auth/reset-password/:token
-GET /api/auth/me (Protected)
-(Refer to the backend's README or API documentation for detailed request/response schemas).
+-----
 
-&lt;/details>
+## 🗺️ API Endpoints Overview
 
-&lt;details>
-&lt;summary>
-&lt;h2>8. Key Frontend Pages &lt;/h2>
-&lt;/summary>
+The backend exposes RESTful APIs under the `/api` prefix.
 
-Login & Registration: Styled to match the dark theme with cyan/gold gradient accents.
-Password Management: Forgot Password and Reset Password pages maintain the design consistency.
-Email Verification: Page to confirm email verification status.
-Dashboard: Protected area for authenticated users to view their profile.
-Navbar: Consistent navigation across all pages.
-&lt;/details>
+  * `POST /api/auth/register` - User registration
+  * `POST /api/auth/login` - User login
+  * `GET /api/auth/verify-email/:token` - Email verification
+  * `POST /api/auth/forgot-password` - Request password reset link
+  * `POST /api/auth/reset-password/:token` - Reset password
+  * `GET /api/auth/me` - Get current user's profile (Protected)
+  * `POST /api/contact` - Submit a contact form message
 
-&lt;details>
-&lt;summary>
-&lt;h2>9. Environment Variables Details &lt;/h2>
-&lt;/summary>
+(Refer to the `backend/README.md` for more detailed API documentation.)
 
-Backend (backend/.env)
-NODE_ENV: development or production.
-BACKEND_PORT: e.g., 5001.
-MONGODB_URI: Your MongoDB Atlas connection string (or local MongoDB URI).
-JWT_SECRET: A strong, random secret for JWT signing.
-JWT_EXPIRES_IN: e.g., 1h, 7d.
-FRONTEND_URL: e.g., http://localhost:5173 (for dev) or your Vercel URL (for prod).
-EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_PASS, EMAIL_FROM_NAME, EMAIL_FROM_ADDRESS: For your email service.
-ETHEREAL_USER, ETHEREAL_PASS: For Ethereal.email development.
-Frontend (frontend/.env)
-VITE_API_BASE_URL: e.g., http://localhost:5001/api (for dev) or your Render backend URL (for prod).
-&lt;/details>
+-----
 
-&lt;details>
-&lt;summary>
-&lt;h2>10. Deployment Instructions &lt;/h2>
-&lt;/summary>
+## 🔑 Key Frontend Pages
 
-MongoDB Atlas Setup
-Create a free account at MongoDB Atlas.
-Create a new cluster (the free M0 tier is sufficient for development/small projects).
-In your cluster settings, go to Network Access and add your current IP address (for local development) and 0.0.0.0/0 (Allow Access From Anywhere - for Render/Vercel, though be mindful of security implications; refine later if needed).
-Go to Database Access and create a database user with a username and password. Grant this user "Read and write to any database" privileges.
-Go to Databases, click "Connect" for your cluster, choose "Connect your application," select Node.js driver, and copy the connection string. Replace <username>, <password>, and myFirstDatabase (or your chosen DB name) in the string. This is your MONGODB_URI.
-Backend Deployment (Render)
-Push your code to a Git provider (GitHub, GitLab, Bitbucket).
-Sign up/log in to Render.
-Click "New +" and select "Web Service".
-Connect your Git repository.
-Configure the service:
-Name: e.g., secure-auth-backend.
-Region: Choose a region close to you or your users.
-Branch: main (or your deployment branch).
-Root Directory: backend (if your package.json for the backend is in the backend/ subdirectory of your monorepo). If Render doesn't easily support monorepo subdirectories, you might need to deploy the backend from a separate repository or adjust build settings.
-Build Command: npm install (or yarn install).
-Start Command: npm start (or node server.js).
-Environment: Choose "Node".
-Environment Variables: Add all necessary variables from your backend/.env file (e.g., MONGODB_URI pointing to Atlas, JWT_SECRET, FRONTEND_URL pointing to your Vercel frontend URL once deployed, production email credentials).
-Select the Free instance type if applicable.
-Click "Create Web Service". Render will build and deploy your backend. Note the .onrender.com URL provided.
-Frontend Deployment (Vercel)
-Push your code to a Git provider.
-Sign up/log in to Vercel.
-Click "Add New..." and select "Project".
-Import your Git repository.
-Configure the project:
-Vercel usually auto-detects React (Vite) projects.
-Root Directory: frontend (if your package.json for the frontend is in the frontend/ subdirectory).
-Build Command: Should be auto-detected as npm run build or vite build.
-Output Directory: Should be auto-detected as dist.
-Environment Variables: Add VITE_API_BASE_URL and set its value to your deployed Render backend URL (e.g., https://your-backend-url.onrender.com/api).
-Click "Deploy". Vercel will build and deploy your frontend. Note the URL provided.
-Post-Deployment:
+  * **Home Page (`/`)**: The main landing page for To-Let Globe (as per UI design).
+  * **Login (`/login`)**: User authentication.
+  * **Register (`/register`)**: New user account creation.
+  * **Forgot Password (`/forgot-password`)**: Initiate password reset.
+  * **Reset Password (`/reset-password/:token`)**: Complete password reset.
+  * **Email Verification Status (`/verify-email`)**: Page to confirm email verification.
+  * **Dashboard (`/dashboard`)**: Protected area for authenticated users.
+  * **Contact Us (`/contact`)**: Form to send messages to administrators.
 
-Update FRONTEND_URL in your Render backend environment variables to your Vercel deployment URL.
-Update VITE_API_BASE_URL in your Vercel frontend environment variables to your Render backend deployment URL.
-Redeploy both services if environment variables were updated after the initial deploy.
-&lt;/details>
+-----
 
-&lt;details>
-&lt;summary>
-&lt;h2>11. Testing &lt;/h2>
-&lt;/summary>
+## 🔒 Environment Variables Details
 
-Backend: Unit and integration tests are written using Jest and Supertest. Run with npm test in the backend/ directory.
-Frontend: (If implemented) Component and integration tests can be written using Vitest/Jest and React Testing Library. Run with npm test in the frontend/ directory.
-&lt;/details>
+Refer to the `.env.example` files in both `backend/` and `frontend/` directories for a complete list and their descriptions.
 
-&lt;details>
-&lt;summary>
-&lt;h2>12. Code Quality & Conventions &lt;/h2>
-&lt;/summary>
+**Important:** Never commit your actual `.env` files to Git. Use `.env.example` for templating.
 
-Linters & Formatters: ESLint and Prettier are configured for both backend and frontend to maintain code consistency and quality.
-Commit Messages: Follow Conventional Commits or a similar standard for clear commit history.
-Branching Strategy: Use a Gitflow-like model (feature branches, develop, main) for organized development.
-&lt;/details>
+-----
 
-&lt;details>
-&lt;summary>
-&lt;h2>13. Contributing &lt;/h2>
-&lt;/summary>
+## 🚀 Deployment Instructions
 
-Contributions are welcome! Please fork the repository, create a feature branch, make your changes, and submit a pull request. Ensure your code adheres to the project's linting rules and testing standards.
+This project is set up for continuous deployment with Render for the backend and Vercel for the frontend.
 
-&lt;/details>
+### 1\. MongoDB Atlas Setup
 
-&lt;details>
-&lt;summary>
-&lt;h2>14. License &lt;/h2>
-&lt;/summary>
+1.  Create a free account on [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register).
+2.  Create a new cluster (the free M0 tier is sufficient).
+3.  **Configure Network Access:** Add your current IP address (for local development) and `0.0.0.0/0` (Allow Access From Anywhere - be cautious in production, narrow this down if possible).
+4.  **Configure Database Access:** Create a new database user with a strong username and password. Grant "Read and write to any database" privileges.
+5.  **Get your Connection String:** Go to "Databases", click "Connect" for your cluster, choose "Connect your application," select Node.js driver, and copy the connection string. Replace `<username>`, `<password>`, and `myFirstDatabase` (or your chosen DB name) in the string. This is your `MONGODB_URI`.
 
-This project is licensed under the MIT License. (Create a LICENSE file with the MIT license text in the monorepo root).
+### 2\. Backend Deployment (Render)
 
-&lt;/details>
+1.  Push your code to GitHub/GitLab/Bitbucket. (Ensure your `to-let-globe` repository is pushed).
+2.  Sign up/log in to [Render](https://render.com/).
+3.  Click "New +" and select "Web Service".
+4.  Connect your Git repository.
+5.  Configure the service:
+      * **Name:** `to-let-globe-backend`
+      * **Region:** Choose a region close to your users or database.
+      * **Branch:** `main` (or your deployment branch).
+      * **Root Directory:** `backend` (crucial for monorepos).
+      * **Build Command:** `npm install`
+      * **Start Command:** `npm start` (or `node server.js`)
+      * **Environment:** Node
+      * **Environment Variables:** Add all necessary variables from your `backend/.env` file.
+          * `NODE_ENV`: `production`
+          * `MONGODB_URI`: Your MongoDB Atlas connection string.
+          * `JWT_SECRET`: A very strong, random secret.
+          * `JWT_EXPIRES_IN`: e.g., `1h`
+          * `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_USER`, `EMAIL_PASS`, `EMAIL_FROM_NAME`, `EMAIL_FROM_ADDRESS`: Your production email service credentials.
+          * `ADMIN_EMAIL`: Your production admin email.
+          * `FRONTEND_URL`: Initially, leave this blank or use a placeholder. You'll update it with your Vercel frontend URL after deployment.
+      * Select the Free instance type if applicable.
+6.  Click "Create Web Service". Render will build and deploy your backend. Note the `.onrender.com` URL provided.
+
+### 3\. Frontend Deployment (Vercel)
+
+1.  Push your code to GitHub/GitLab/Bitbucket.
+2.  Sign up/log in to [Vercel](https://vercel.com/).
+3.  Click "Add New..." and select "Project".
+4.  Import your Git repository.
+5.  Configure the project:
+      * **Project Name:** `to-let-globe-frontend`
+      * Vercel usually auto-detects React (Vite) projects.
+      * **Root Directory:** `frontend` (crucial for monorepos).
+      * **Build Command:** Should be auto-detected as `npm run build` or `vite build`.
+      * **Output Directory:** Should be auto-detected as `dist`.
+      * **Environment Variables:**
+          * `VITE_API_BASE_URL`: Set this to your deployed Render backend URL (e.g., `https://to-let-globe-backend.onrender.com/api`).
+6.  Click "Deploy". Vercel will build and deploy your frontend. Note the `.vercel.app` URL provided.
+
+### 4\. Post-Deployment Updates
+
+1.  **Update Render Backend:** Go back to your `to-let-globe-backend` service on Render. Update the `FRONTEND_URL` environment variable to your Vercel frontend URL (e.g., `https://to-let-globe-frontend.vercel.app`). Trigger a redeploy on Render.
+2.  **Verify Deployment:** Open your Vercel frontend URL. Test all functionalities, especially login, registration, and the contact form, to ensure seamless communication with the deployed backend and database.
+
+-----
+
+## ✅ Testing
+
+  * **Backend:** Unit and integration tests are written using Jest and Supertest.
+      * Run tests: `npm test` in the `backend/` directory.
+  * **Frontend:** (If implemented) Component and integration tests can be written using Vitest/Jest and React Testing Library.
+      * Run tests: `npm test` in the `frontend/` directory.
+
+-----
+
+## 📐 Code Quality & Conventions
+
+  * **Linters & Formatters:** ESLint and Prettier are configured for both backend and frontend to maintain code consistency and quality.
+      * Run `npm run lint` to check for errors.
+      * Run `npm run format` to automatically format code.
+  * **Commit Messages:** Follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for a clear and automated changelog-friendly commit history (e.g., `feat: Add contact form`, `fix: Resolve email sending error`).
+  * **Branching Strategy:** A Gitflow-like model (feature branches, `develop`, `main`) is recommended for organized development.
+
+-----
+
+## 👋 Contributing
+
+Contributions are welcome\! Please fork the repository, create a feature branch, make your changes, and submit a pull request. Ensure your code adheres to the project's linting rules and testing standards.
+
+-----
+
+## 📜 License
+
+This project is licensed under the MIT License. See the `LICENSE` file in the monorepo root for details.
+
+```
+```
