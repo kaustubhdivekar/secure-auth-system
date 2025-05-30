@@ -82,7 +82,7 @@ const sendEmail = async (options) => {
 
   // Define email options
   const mailOptions = {
-    from: `"SecureAuth App" <timothy.runolfsdottir82@ethereal.email>`, // Explicit Ethereal sender
+    from: `"To-Let Globe" <timothy.runolfsdottir82@ethereal.email>`, // Explicit Ethereal sender
     // from: `"<span class="math-inline">\{process\.env\.EMAIL\_FROM\_NAME \|\| 'SecureAuth App'\}" <</span>{process.env.EMAIL_FROM_ADDRESS || 'noreply@example.com'}>`,
     to: options.email,       // Recipient's email address
     subject: options.subject,  // Subject line

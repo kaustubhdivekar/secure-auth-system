@@ -41,6 +41,15 @@ const HomePage = () => {
         <div className={styles.feature}>Feature 2: Verified Users</div>
         <div className={styles.feature}>Feature 3: Great Support</div>
       </section>
+
+      <section className={styles.featuresSection}>
+        <h2>Contact Us</h2>
+        <div className={styles.authActions}>
+            <Link to="/contact">
+              <Button className={styles.heroButton}>Contact Us</Button>
+            </Link>
+        </div>
+      </section>
     </div>
   );
 };

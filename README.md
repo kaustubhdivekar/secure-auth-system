@@ -1,4 +1,4 @@
-# Secure Auth System - Full Stack Application (Monorepo) 
+# To Let Globe - Full Stack Application (Monorepo) 
 
 **Version:** 1.0.0
 **Last Updated:** May 25, 2025

@@ -14,6 +14,7 @@ const VerifyEmailPage = lazy(() => import('./pages/Auth/VerifyEmailPage.jsx'));
 const DashboardPage = lazy(() => import('./pages/Dashboard/DashboardPage.jsx'));
 const UnauthorizedPage = lazy(() => import('./pages/Status/UnauthorizedPage.jsx'));
 const NotFoundPage = lazy(() => import('./pages/Status/NotFoundPage.jsx'));
+const ContactUsPage = lazy(() => import('./pages/ContactUsPage.jsx'));
 // const AdminPage = lazy(() => import('./pages/Admin/AdminPage.jsx'));
 
 const LoadingFallback = () => <div style={{ textAlign: 'center', color: 'var(--color-text-primary)', marginTop: '60px', fontSize: '1.5rem' }}>Loading Page...</div>;
@@ -36,6 +37,7 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
           <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
           <Route path="/unauthorized" element={<UnauthorizedPage />} />
+          <Route path="/contact" element={<ContactUsPage />} />
 
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>

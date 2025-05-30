@@ -3,6 +3,7 @@ const express = require('express'); // Express framework for building web applic
 const dotenv = require('dotenv');   // For loading environment variables from a .env file
 const cors = require('cors');       // For enabling Cross-Origin Resource Sharing
 const authRoutes = require('./routes/authRoutes'); // Import the auth router
+const contactRoutes = require('./routes/contactRoutes'); // Import the contact router
 const { errorHandler } = require('./middleware/errorMiddleware'); // Import the error router
 const rateLimit = require('express-rate-limit'); // Import express rate limit
 const helmet = require('helmet');
@@ -73,6 +74,11 @@ app.get('/', (req, res) => {
 // All routes defined in authRoutes.js will be prefixed with /api/auth
 app.use('/api/auth', authRoutes);
 // Example: app.use('/api/users', require('./routes/userRoutes'));
+// Mount routes
+app.use('/api/auth', authRoutes);
+app.use('/api/contact', contactRoutes); // NEW: Use /api prefix for contact routes
+// app.use('/api', blogRoutes); // Will be added later
+// app.use('/api', propertyRoutes); // Will be added later
 
 // 9. Global Error Handling Middleware
 app.use(errorHandler);
