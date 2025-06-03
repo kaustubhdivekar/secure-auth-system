@@ -35,6 +35,7 @@ const allowedOrigins = [
     'http://localhost:5173', // Your frontend local development URL
     'http://localhost:3000', // Common for Create React App local dev
     'https://to-let-globe-kaustubh-divekar-projects.vercel.app/',
+    'https://to-let-globe-mlwindwy0-kaustubh-divekar-projects.vercel.app/',
     'https://to-let-globe-rho.vercel.app' // Vercel frontend URL AFTER deployment
 ];
 
