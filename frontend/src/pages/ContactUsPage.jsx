@@ -1,10 +1,10 @@
-// frontend/src/pages/ContactUsPage.jsx (Example structure)
+// frontend/src/pages/ContactUsPage.jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import contactService from '../services/contactService'; // Create this service
+import contactService from '../services/contactService';
 
-import styles from './ContactUsPage.module.css'; // Create this CSS module
+import styles from './ContactUsPage.module.css';
 
 const ContactUsPage = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
