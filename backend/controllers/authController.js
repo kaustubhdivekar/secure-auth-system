@@ -63,7 +63,7 @@ exports.registerUser = async (req, res, next) => {
       // const backendVerificationUrl = `http://localhost:5001/api/auth/verify-email/${rawVerificationToken}`;
 
       const emailMessage = `
-        <h2>Thank you for registering with SecureAuth!</h2>
+        <h2>Thank you for registering with To=Let Globbe!</h2>
         <p>Please verify your email address by clicking the link below:</p>
         <p><a href="${verificationUrl}" target="_blank">Verify Email Address</a></p>
         <p>This link will expire in 24 hours.</p>
@@ -72,7 +72,7 @@ exports.registerUser = async (req, res, next) => {
 
       await sendEmail({
         email: newUser.email,
-        subject: 'Verify Your Email Address - SecureAuth App',
+        subject: 'Verify Your Email Address - To-Let Globe',
         html: emailMessage,
         text: `Please verify your email by visiting this link: ${verificationUrl}` // Fallback text
       });
@@ -201,7 +201,7 @@ exports.forgotPassword = async (req, res, next) => {
 
     const emailMessage = `
       <h2>Password Reset Request</h2>
-      <p>You (or someone else) requested a password reset for your SecureAuth account.</p>
+      <p>You (or someone else) requested a password reset for your To-Let Globe account.</p>
       <p>If this was you, click the link below to reset your password:</p>
       <p><a href="${resetUrl}" target="_blank">Reset Your Password</a></p>
       <p>This link is valid for 15 minutes.</p>
@@ -211,7 +211,7 @@ exports.forgotPassword = async (req, res, next) => {
     try {
       await sendEmail({
         email: user.email,
-        subject: 'Password Reset Request - SecureAuth App',
+        subject: 'Password Reset Request - To-Let Globe',
         html: emailMessage,
         text: `To reset your password, visit: ${resetUrl}`
       });
@@ -311,7 +311,7 @@ exports.resendVerificationEmail = async (req, res, next) => {
 
         const resendEmailMessage = `
             <h2>New Email Verification Link for Your Account</h2>
-            <p>You requested a new email verification link for your SecureAuth account.</p>
+            <p>You requested a new email verification link for your To-Let Globe account.</p>
             <p>Please click the link below to verify your email address:</p>
             <p><a href="${verificationUrl}" target="_blank">Verify My Email Address</a></p>
             <p>This link is valid for 10 minutes.</p>
