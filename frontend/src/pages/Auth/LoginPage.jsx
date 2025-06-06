@@ -1,3 +1,4 @@
+// frontend/src/pages/Auth/LoginPage.jsx
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
@@ -5,8 +6,7 @@ import { toast } from 'react-toastify';
 import authService from '../../services/authService';
 import { useAuth } from '../../contexts/AuthContext';
 import styles from './AuthPages.module.css'; // Shared styles
-// Assuming AuthLayout is optional or you center manually
-// import AuthLayout from '../../components/layout/AuthLayout';
+import AuthLayout from '../../components/layout/AuthLayout';
 
 // Icons from react-icons
 import { FaUserAlt, FaLock } from 'react-icons/fa';
@@ -77,16 +77,15 @@ const LoginPage = () => {
         </div>
         {errors.password && <p className={styles.errorMessage}>{errors.password.message}</p>}
 
-        <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
+        <button type="submit" className={styles.submitButtonFullWidth} disabled={isSubmitting}>
           {isSubmitting ? 'Logging in...' : 'LOGIN'}
         </button>
 
         <div className={styles.linksContainer}>
-          <Link to="/forgot-password" className={styles.authLink}>
+          <Link to="/forgot-password" className={styles.authLinkHighlight}>
             Forgot Password ?
-          </Link>{' '}
-          {/* Added space for UI match */}
-          <Link to="/register" className={styles.authLink}>
+          </Link>
+          <Link to="/register" className={styles.authLinkHighlight}>
             Register
           </Link>
         </div>
@@ -94,9 +93,7 @@ const LoginPage = () => {
     </div>
   );
 
-  // If using AuthLayout: return <AuthLayout>{pageContent}</AuthLayout>;
-  // Centering manually:
-  return <div className={styles.fullPageCentered}>{pageContent}</div>;
+  return <AuthLayout>{pageContent}</AuthLayout>;
 };
 
 export default LoginPage;

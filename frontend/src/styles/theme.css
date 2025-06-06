@@ -1,24 +1,25 @@
+/* frontend/src/styles/theme.css */
 :root {
   /* Colors from Sample UI */
   --color-background-dark: #000000; /* Deep black from sample */
-  --color-form-background-inner: #0D0D0D; /* Form background matches page background */
-  --color-navbar-background: #121212; /* Slightly lighter for navbar maybe, or same */
+  --color-form-background-inner: #0A0A0A; /* Slightly off-black for inner form */
+  --color-navbar-background: #0A0A0A; /* Consistent with form for now */
   --color-input-background: #1C1C1C; /* Dark grey for inputs */
-  --color-input-border: #3A3A3A;
-  --color-input-icon: #6c757d; /* Muted icon color */
+  --color-input-border: #333333; /* Slightly darker border for inputs */
+  --color-input-icon: #888888; /* Muted icon color */
 
   --color-text-primary: #E0E0E0; /* Light grey/white for text */
-  --color-text-secondary: #A0A0A0; /* For placeholders, less important text */
-  --color-text-link: #A0A0A0;
-  --color-text-link-hover: #22d3ee; /* Cyan on hover */
+  --color-text-secondary: #AAAAAA; /* For placeholders, less important text */
+  --color-text-link: var(--color-accent-cyan); /* Links stand out more */
+  --color-text-link-hover: var(--color-accent-gold); /* Gold on hover */
 
-  --color-accent-cyan: #22d3ee;
-  --color-accent-gold: #f5b920;
+  --color-accent-cyan: #00D1FF;
+  --color-accent-gold: #FFC107;
   --gradient-border: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-gold));
 
   --color-button-primary-bg: var(--color-accent-cyan); /* Solid cyan for button */
-  --color-button-primary-text: #0D0D0D; /* Dark text on button */
-  --color-button-primary-hover-bg: #1FB8D0; /* Slightly darker cyan */
+  --color-button-primary-text: #ffffff; /* White text on button */
+  --color-button-primary-hover-bg: #00B1D4; /* Slightly darker cyan */
 
   --color-error: #e53e3e; /* Red for errors */
   --color-success: #38a169; /* Green for success */
@@ -32,9 +33,22 @@
   --font-weight-bold: 700;
 
   /* Borders & Spacing */
-  --border-radius-form-outer: 25px;
+  --border-radius-form-outer: 15px; /* Less rounded for the second image */
   --border-radius-form-inner: 22px; /* (outer - padding of gradient border) */
-  --border-radius-input: 8px;
-  --border-radius-button: 20px;
+  --border-radius-input: 8px; /* Slightly more rounded inputs */
+  --border-radius-button: 20px; /* Less rounded button, more like inputs */
   --spacing-unit: 8px;
+
+   /* Navbar specific variables (from Navbar.module.css) */
+  --navbar-height: 80px; /* Define navbar height here for AuthLayout calculation */
+  --navbar-bg: var(--color-navbar-background);
+  --navbar-logo-color: var(--color-text-primary);
+  --text-color-navbar-link: var(--color-text-secondary);
+  --text-color-navbar-link-hover: var(--color-text-primary);
+  --navbar-active-link-bg: rgba(var(--color-accent-cyan-rgb), 0.1); /* Assuming you'll define RGB */
+  --navbar-active-link-text: var(--color-accent-cyan);
+
+  /* Add RGB values for colors if needed for transparency */
+  --color-accent-cyan-rgb: 0, 209, 255;
+  --color-accent-gold-rgb: 255, 193, 7;
 }

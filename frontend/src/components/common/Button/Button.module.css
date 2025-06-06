@@ -16,6 +16,8 @@
 }
 .primary:hover:not(:disabled) {
   background-color: var(--color-button-primary-hover-bg);
+  box-shadow: 0 0 15px rgba(var(--color-accent-cyan-rgb), 0.5); /* Optional: Add a subtle glow */
+  transform: translateY(-1px); /* Subtle lift effect */
 }
 .primary:disabled {
   background-color: var(--color-text-secondary);
@@ -33,4 +35,6 @@
 .secondary:hover:not(:disabled) {
   background-color: var(--color-accent-cyan);
   color: var(--color-button-primary-text);
+  box-shadow: 0 0 15px rgba(var(--color-accent-cyan-rgb), 0.5); /* Optional: Add a subtle glow */
+  transform: translateY(-1px); /* Subtle lift effect */
 }

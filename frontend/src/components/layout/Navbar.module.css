@@ -2,59 +2,73 @@
   background-color: var(--navbar-bg);
   padding: 15px 0; /* Adjust padding */
   border-bottom: 1px solid #2a2a2a; /* Subtle border */
+  /* Ensure it's not absolutely positioned in a way that breaks layout */
+  /* If it's fixed, make sure its height is accounted for in AuthLayout */
+  /* If you want it fixed to the top: */
+  position: fixed; /* Make it fixed */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Ensure it's above other content */
+  height: var(--navbar-height); /* Ensure this height is defined in theme.css or here */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the navContainer horizontally */
 }
 
 .navContainer {
-  max-width: 1200px; /* Or your preferred max-width */
-  margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  width: 90%; /* Match global container width */
+  max-width: 1200px; /* Match global container max-width */
+  margin: 0 auto; /* Center the container itself */
+  display: flex; /* Make the container a flexbox */
+  justify-content: space-between; /* Pushes logo to left, nav links to right */
+  align-items: center; /* Vertically align items in the container */
+  height: 100%; /* Ensure it takes full height of the navbar */
 }
 
+.navLinks {
+  display: flex; /* Make the links themselves a flex container */
+  gap: 20px; /* Space out the navigation links */
+  align-items: center; /* Align items vertically */
+}
+
+
+/* Add specific colors for Navbar links based on theme.css */
 .logo {
   font-size: 1.8rem;
   font-weight: bold;
   color: var(--navbar-logo-color);
   text-decoration: none;
-  /* If using an image: display: block; height: 40px; */
-}
-
-.navLinks {
-  display: flex;
-  align-items: center;
-  gap: 25px; /* Space between links */
 }
 
 .navLink {
   color: var(--text-color-navbar-link);
   text-decoration: none;
   font-size: 1rem;
-  padding: 8px 12px; /* Padding for hover/active state */
-  border-radius: var(--border-radius-input); /* Consistent border radius */
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
+  padding: 8px 12px;
+  border-radius: var(--border-radius-input);
+  background-color: transparent; /* Explicitly set to transparent */
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .navLink:hover {
   color: var(--text-color-navbar-link-hover);
-  background-color: rgba(255, 255, 255, 0.05); /* Subtle hover */
+  background-color: rgba(var(--color-accent-cyan-rgb), 0.1); /* Subtle hover */
 }
 
 .activeNavLink {
   background-color: var(--navbar-active-link-bg);
-  color: var(--navbar-active-link-text) !important; /* Ensure override */
-  font-weight: 500;
+  color: var(--navbar-active-link-text) !important;
+  font-weight: var(--font-weight-medium);
 }
 
 .logoutButton {
-  background-color: transparent;
-  border: 1px solid var(--accent-gradient-start);
-  color: var(--accent-gradient-start);
-}
-.logoutButton:hover {
-  background-color: var(--accent-gradient-start);
-  color: var(--button-primary-text);
+  /* Inherit navLink styles and then override for specific button needs */
+  background-color: transparent; /* Start transparent */
+  border: none; /* Remove button default border */
+  cursor: pointer;
+  &:hover {
+    background-color: var(--color-accent-cyan);
+    color: var(--color-button-primary-text);
+  }
 }

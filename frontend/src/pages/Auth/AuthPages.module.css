@@ -1,128 +1,175 @@
-/* src/pages/Auth/AuthPages.module.css */
-.fullPageCentered {
-  /* Add this if not using AuthLayout */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: calc(100vh - 80px); /* Adjust 80px based on navbar height */
-  padding: 20px;
-}
-
 .authFormContainerWithGradientBorder {
-  background-color: var(--background-color-dark); /* Or a slightly different shade */
-  padding: 3px; /* Thickness of the border */
-  border-radius: 25px; /* Match the UI's rounded corners */
-  background-image: linear-gradient(
-    135deg,
-    var(--accent-gradient-start),
-    var(--accent-gradient-end)
-  );
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  /* Use theme variables for background and gradient */
+  background-color: var(--color-form-background-inner); /* Background for the border space */
+  padding: 2px; /* Thinner gradient border */
+  border-radius: var(--border-radius-form-outer); /* Defined in theme.css */
+  background-image: var(--gradient-border); /* Defined in theme.css */
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); /* Stronger shadow */
   width: 100%;
-  max-width: 400px; /* Or as per your design */
+  max-width: 450px; /* Slightly wider form as in the second image */
+  overflow: hidden; /* Ensures content respects border-radius */
 }
 
 .authForm {
-  background-color: var(--background-color-dark); /* Inner background */
-  padding: 30px 40px; /* Inner padding */
-  border-radius: 22px; /* Slightly less than outer to show border */
+  background-color: var(--color-form-background-inner); /* Inner background */
+  padding: 35px 50px; /* More padding, wider form feel */
+  border-radius: var(--border-radius-form-inner); /* Slightly less than outer to show border */
   display: flex;
   flex-direction: column;
+  gap: 15px; /* Consistent spacing between elements */
 }
 
 .title {
   text-align: center;
-  color: var(--text-color-light);
-  margin-bottom: 25px;
-  font-size: 2rem;
-  font-weight: 300; /* Lighter font weight as in UI */
+  color: var(--color-text-primary);
+  margin-bottom: 25px; /* Increased margin-bottom for title */
+  font-size: 2.2rem; /* Larger title */
+  font-weight: var(--font-weight-light); /* Lighter font weight as in UI */
+  letter-spacing: 0.5px;
 }
 
 .inputGroup {
   position: relative;
-  margin-bottom: 20px;
+  /* margin-bottom handled by form gap */
 }
 
 .inputIcon {
   position: absolute;
-  left: 15px;
+  left: 18px; /* Adjust icon position */
   top: 50%;
   transform: translateY(-50%);
-  color: var(--text-color-muted);
-  font-size: 1.1rem; /* Adjust as needed */
+  color: var(--color-input-icon); /* Muted icon color from theme */
+  font-size: 1.1rem;
+  pointer-events: none; /* Ensure icon doesn't block clicks */
+  z-index: 1; /* Ensure icon is above the input */
 }
 
 .inputField {
   width: 100%;
-  padding: 12px 15px 12px 45px; /* Padding to make space for icon */
-  background-color: var(--input-background);
-  border: 1px solid var(--input-border-color);
-  border-radius: 10px; /* Rounded inputs */
-  color: var(--text-color-light);
+  padding: 14px 18px 14px 50px; /* Increased padding, space for icon */
+  background-color: var(--color-input-background);
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--border-radius-input); /* Rounded inputs from theme */
+  color: var(--color-text-primary);
   font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.inputField::placeholder {
+  color: var(--color-text-secondary); /* Placeholder color from theme */
+  opacity: 0.7;
 }
 .inputField:focus {
   outline: none;
-  border-color: var(--accent-gradient-start);
-  box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.3); /* Focus glow */
+  border-color: var(--color-accent-cyan); /* Cyan border on focus */
+  box-shadow: 0 0 0 3px rgba(var(--color-accent-cyan-rgb), 0.3); /* Cyan glow */
 }
 .inputError {
-  /* Style for input field when there's an error */
-  border-color: var(--danger-color);
+  border-color: var(--color-error); /* Error border from theme */
 }
 
-.submitButton {
-  background-color: var(--accent-gradient-start); /* Solid color for button */
-  color: var(--button-primary-text);
-  padding: 12px 20px;
-  border: none;
-  border-radius: 20px; /* More rounded button */
+/* Specific styling for the select field */
+.selectField {
+  -webkit-appearance: none; /* Remove default arrow on WebKit browsers */
+  -moz-appearance: none; /* Remove default arrow on Firefox */
+  appearance: none; /* Remove default arrow */
+  width: 100%;
+  padding: 10px 10px 10px 55px; /* Adjust padding-left to clear the icon. */
+  background-color: var(--color-input-background);
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--border-radius-input);
+  color: var(--color-text-primary);
   font-size: 1rem;
-  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23E0E0E0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); /* Custom SVG arrow */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.submitButton:hover {
-  background-color: #00e0e0; /* Slightly lighter cyan */
+
+.selectField:focus {
+  outline: none;
+  border-color: var(--color-accent-cyan);
+  box-shadow: 0 0 0 3px rgba(var(--color-accent-cyan-rgb), 0.3);
 }
-.submitButton:disabled {
-  background-color: var(--secondary-color);
+
+.submitButtonFullWidth {
+  background-color: transparent; /* Make background transparent by default */
+  color: var(--color-accent-cyan); /* Text color is cyan by default */
+  padding: 14px 20px; /* Increased padding */
+  border: 2px solid var(--color-accent-cyan); /* Add a border to define its shape when transparent */
+  border-radius: var(--border-radius-button); /* Rounded from theme */
+  font-size: 1.1rem; /* Slightly larger text */
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  text-transform: uppercase; /* Optional: Make text uppercase as seen in some button designs */
+  letter-spacing: 0.05em;
+  width: 100%; /* Full width button */
+  margin-top: 20px; /* Spacing before button */
+}
+.submitButtonFullWidth:hover {
+  background-color: var(--color-accent-cyan); /* Fill with cyan on hover */
+  color: var(--color-button-primary-text); /* Text becomes white on hover */
+  border-color: var(--color-accent-cyan); /* Ensure border also matches hover color if desired */
+  box-shadow: 0 0 15px rgba(var(--color-accent-cyan-rgb), 0.5); /* Optional: Add a subtle glow */
+  transform: translateY(-1px); /* Subtle lift effect */
+}
+.submitButtonFullWidth:disabled {
+  background-color: var(--color-input-border); /* Muted color when disabled */
   cursor: not-allowed;
+  transform: translateY(0);
+  opacity: 0.7;
+}
+
+.subheading {
+    text-align: center; 
+    margin-bottom: 30px; 
+    color: var(--color-text-secondary);
+}
+
+.authLinkMuted {
+  text-align: center;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+  margin-top: 15px; /* Spacing after button */
 }
 
 .linksContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between; /* This will push links to opposite ends */
+    align-items: center; /* Vertically align them if they have different heights */
+    width: 100%; /* Ensure it takes full width of the form */
+    margin-top: 15px; /* Add some space above the links */
+    font-size: 0.9rem; /* Adjust font size if needed */
 }
 
-.authLink {
-  color: var(--text-color-muted);
-  font-size: 0.9rem;
-  text-decoration: none;
+.authLinkHighlight {
+  color: var(--color-accent-cyan); /* Cyan link */
+  text-decoration: none; /* No underline by default */
+  font-weight: var(--font-weight-medium);
+  transition: color 0.2s ease, text-decoration 0.2s ease;
 }
-.authLink:hover {
-  color: var(--accent-gradient-start);
-  text-decoration: underline;
+.authLinkHighlight:hover {
+  color: var(--color-accent-gold); /* Gold on hover */
+  text-decoration: underline;  /* Underline on hover */
 }
 
 .errorMessage {
-  /* For react-hook-form errors */
-  color: var(--danger-color);
-  font-size: 0.85rem;
-  margin-top: -15px; /* Adjust to position under input */
-  margin-bottom: 10px;
+  color: var(--color-error); /* Error color from theme */
+  font-size: 0.8rem;
+  margin-top: -10px; /* Adjust to position under input */
+  margin-bottom: 5px;
   padding-left: 5px;
 }
 .serverError {
-  /* For server-side errors */
-  color: var(--danger-color);
-  background-color: rgba(220, 53, 69, 0.1);
-  border: 1px solid var(--danger-color);
+  color: var(--color-error);
+  background-color: rgba(var(--color-error-rgb), 0.1); /* If you add RGB error variable */
+  border: 1px solid var(--color-error);
   padding: 10px;
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-input);
   margin-bottom: 20px;
   text-align: center;
+  font-size: 0.9rem;
 }

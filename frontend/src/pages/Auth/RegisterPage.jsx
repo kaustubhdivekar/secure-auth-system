@@ -1,4 +1,3 @@
-// src/pages/Auth/RegisterPage.jsx
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,7 +8,7 @@ import AuthLayout from '../../components/layout/AuthLayout';
 import InputField from '../../components/common/InputField/InputField';
 import Button from '../../components/common/Button/Button';
 import PasswordStrengthIndicator from '../../components/ui/PasswordStrengthIndicator/PasswordStrengthIndicator';
-import { FaUserAlt, FaEnvelope, FaLock, FaBriefcase } from 'react-icons/fa'; // Example icons
+import { FaUserAlt, FaEnvelope, FaLock, FaBriefcase } from 'react-icons/fa'; // Added FaBuilding for F/L Name
 
 const VALID_ROLES = ['Buyer', 'Tenant', 'Owner', 'User', 'Admin', 'Content Creator'];
 
@@ -34,8 +33,8 @@ const RegisterPage = () => {
         email: data.email,
         password: data.password,
         role: data.role,
-        firstName: data.firstName,
-        lastName: data.lastName,
+        firstName: data.firstName, // Now mandatory in UI
+        lastName: data.lastName,   // Now mandatory in UI
       };
       const response = await authService.register(payload);
       if (response.success) {
@@ -67,6 +66,28 @@ const RegisterPage = () => {
             {...register('username', {
               required: 'Username is required',
               minLength: { value: 3, message: 'Username must be at least 3 characters' },
+            })}
+          />
+          {/* First Name - Made Mandatory */}
+          <InputField
+            id="firstName"
+            placeholder="First Name"
+            icon={<FaUserAlt />} /* Using FaUserAlt, could use FaBuilding for a generic feel */
+            error={errors.firstName?.message}
+            {...register('firstName', {
+              required: 'First Name is required',
+              minLength: { value: 2, message: 'First Name must be at least 2 characters' },
+            })}
+          />
+          {/* Last Name - Made Mandatory */}
+          <InputField
+            id="lastName"
+            placeholder="Last Name"
+            icon={<FaUserAlt />} /* Using FaUserAlt, could use FaBuilding for a generic feel */
+            error={errors.lastName?.message}
+            {...register('lastName', {
+              required: 'Last Name is required',
+              minLength: { value: 2, message: 'Last Name must be at least 2 characters' },
             })}
           />
           <InputField
@@ -107,18 +128,20 @@ const RegisterPage = () => {
               validate: (value) => value === passwordValue || 'Passwords do not match',
             })}
           />
-          <div className={styles.inputGroup}> {/* For select styling */}
-            {/* <FaBriefcase className={styles.selectIcon} />  You'd need to style this */ }
-            <select id="role" className={styles.selectField} {...register('role', { required: 'Role is required' })}>
+          <div className={styles.inputGroup}>
+            <FaBriefcase className={styles.inputIcon} /> {/* Icon for Role Select */}
+            <select
+              id="role"
+              className={styles.selectField} // Apply selectField specific styling
+              {...register('role', { required: 'Role is required' })}
+            >
+              <option value="" disabled>Select Role</option> {/* Added a disabled placeholder option */}
               {VALID_ROLES.map(r => <option key={r} value={r}>{r}</option>)}
             </select>
             {errors.role && <p className={styles.errorMessage}>{errors.role.message}</p>}
           </div>
-          {/* Optional Fields */}
-          <InputField id="firstName" placeholder="First Name (Optional)" {...register('firstName')} />
-          <InputField id="lastName" placeholder="Last Name (Optional)" {...register('lastName')} />
 
-          <Button type="submit" disabled={isSubmitting} className={styles.submitButtonFullWidth}>
+          <Button type="submit" disabled={isSubmitting} variant="secondary" className={styles.submitButtonFullWidth}>
             {isSubmitting ? 'Registering...' : 'Create Account'}
           </Button>
           <p className={styles.authLinkMuted}>

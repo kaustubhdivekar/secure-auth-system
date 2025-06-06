@@ -80,7 +80,7 @@ const ResetPasswordPage = () => {
               validate: (value) => value === passwordValue || 'Passwords do not match',
             })}
           />
-          <Button type="submit" disabled={isSubmitting} className={styles.submitButtonFullWidth}>
+          <Button type="submit" disabled={isSubmitting} variant="secondary" className={styles.submitButtonFullWidth}>
             {isSubmitting ? 'Resetting...' : 'Reset Password'}
           </Button>
            <p className={styles.authLinkMuted}>

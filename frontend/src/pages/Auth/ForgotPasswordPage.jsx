@@ -56,7 +56,7 @@ const ForgotPasswordPage = () => {
               pattern: { value: /^\S+@\S+\.\S+$/, message: 'Invalid email address' },
             })}
           />
-          <Button type="submit" disabled={isSubmitting} className={styles.submitButtonFullWidth}>
+          <Button type="submit" disabled={isSubmitting} variant="secondary" className={styles.submitButtonFullWidth}>
             {isSubmitting ? 'Sending...' : 'Send Reset Link'}
           </Button>
           <p className={styles.authLinkMuted}>

@@ -1,157 +1,62 @@
 /* frontend/src/pages/ContactUsPage.module.css */
 
-.container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 40px; /* Increased padding for better spacing */
-    background-color: var(--color-background-secondary); /* Assuming you have a secondary background color */
-    border-radius: var(--border-radius-large); /* Assuming you have a border-radius variable */
-    box-shadow: var(--shadow-deep); /* Assuming you have a shadow variable */
-    color: var(--color-text-primary);
-    text-align: center;
-    /* Apply a subtle gradient border for consistency with your design */
-    border: 2px solid transparent;
-    background-origin: padding-box, border-box;
-    background-image:
-        linear-gradient(var(--color-background-secondary), var(--color-background-secondary)),
-        linear-gradient(to right, var(--color-accent-cyan), var(--color-accent-gold));
-    background-repeat: no-repeat;
-    background-size: 100% 100%, 100% 100%;
-    background-position: 0px 0px, 0px 0px;
-    position: relative;
-}
+/* Remove or simplify styles that are now handled by AuthLayout and AuthPages.module.css */
+/* For instance, the .container styles for max-width, margin, padding, background, border, shadow, and gradient are likely redundant if using AuthLayout. */
 
-.container::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: var(--border-radius-large); /* Match container border-radius */
-    padding: 3px; /* Controls border thickness */
-    background: linear-gradient(to right, var(--color-accent-cyan), var(--color-accent-gold));
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-            mask-composite: exclude;
-    pointer-events: none; /* Allows clicks to pass through */
-}
+/* .container should be mostly empty or contain only unique page-level styling if needed */
+/* .container { */
+    /* If AuthLayout already provides a full-height container, this might not be needed */
+    /* If you still need a wrapper inside AuthLayout, keep minimal styles here */
+    /* Example: */
+    /* padding: 20px; */
+    /* text-align: center; */
+/* } */
 
 
-.heading {
-    font-size: 3rem; /* Larger heading */
+/* .heading { */
+    /* Reuse heading style from AuthPages.module.css via authStyles.title if possible */
+    /* If unique, define here. Otherwise, remove. */
+    /* Example: */
+    /* font-size: 3rem;
     margin-bottom: 15px;
-    color: var(--color-text-highlight); /* Use a highlight color */
-    text-shadow: 0 0 8px rgba(var(--color-accent-cyan-rgb), 0.5); /* Subtle glow */
-}
+    color: var(--color-text-highlight);
+    text-shadow: 0 0 8px rgba(var(--color-accent-cyan-rgb), 0.5); */
+/* } */
 
 .subheading {
+    /* This can be kept if it's specific to the Contact Us page */
     font-size: 1.2rem;
     color: var(--color-text-secondary);
     margin-bottom: 30px;
 }
 
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Space between form groups */
-    text-align: left; /* Align form elements to the left within the form */
-}
-
-.formGroup {
-    margin-bottom: 15px;
-}
-
-.formGroup label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-text-primary);
-}
-
-.formGroup input[type="text"],
-.formGroup input[type="email"],
-.formGroup select,
-.formGroup textarea {
-    width: 100%;
-    padding: 12px 15px; /* Increased padding */
-    border: 1px solid var(--color-border); /* Consistent border color */
-    border-radius: var(--border-radius-small);
-    background-color: var(--color-input-background); /* Darker input background */
-    color: var(--color-text-primary);
-    font-size: 1rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-}
-
-.formGroup input[type="text"]:focus,
-.formGroup input[type="email"]:focus,
-.formGroup select:focus,
-.formGroup textarea:focus {
-    border-color: var(--color-accent-cyan); /* Cyan focus border */
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(var(--color-accent-cyan-rgb), 0.3); /* Subtle glow on focus */
-}
-
-.formGroup textarea {
-    resize: vertical; /* Allow vertical resizing */
-    min-height: 100px; /* Minimum height for textarea */
-}
-
-.error {
-    color: var(--color-error); /* Assuming an error color variable */
-    font-size: 0.9rem;
-    margin-top: 5px;
-    display: block; /* Ensures it's on its own line */
-}
-
-.submitButton {
-    padding: 14px 25px; /* Increased padding */
-    border: none;
-    border-radius: var(--border-radius-small);
-    background: linear-gradient(to right, var(--color-accent-cyan), var(--color-accent-gold));
-    color: var(--color-button-text); /* Assuming a button text color, usually white or light */
-    font-size: 1.1rem; /* Slightly larger font */
-    font-weight: 700;
-    cursor: pointer;
-    transition: opacity 0.3s ease, transform 0.2s ease;
-    margin-top: 20px;
-    width: auto; /* Allow button to size based on content */
-    align-self: center; /* Center the button within the form */
-}
-
-.submitButton:hover {
-    opacity: 0.9;
-    transform: translateY(-2px); /* Slight lift on hover */
-}
-
-.submitButton:active {
-    transform: translateY(0);
-}
+/* Remove .form, .formGroup, label, input, select, textarea, .error styles if InputField and authStyles are used */
+/* If you keep any of these, ensure they don't conflict and use theme variables */
 
 .privacyStatement {
+    /* Keep this if it's specific, otherwise consider moving to a shared styles file */
     font-size: 0.85rem;
     color: var(--color-text-secondary);
     margin-top: 30px;
     line-height: 1.5;
 }
 
-/* Responsive Adjustments */
+/* Responsive Adjustments: Adjust as needed, but if the main form container is responsive through AuthPages.module.css, these might be minimal */
 @media (max-width: 768px) {
-    .container {
+    /* .container {
         margin: 20px;
         padding: 25px;
-    }
+    } */
 
-    .heading {
+    /* .heading {
         font-size: 2.2rem;
     }
 
     .subheading {
         font-size: 1rem;
-    }
+    } */
 
-    .submitButton {
-        width: 100%;
-    }
+    /* .submitButton { */
+        /* width: 100%; */
+    /* } */
 }
