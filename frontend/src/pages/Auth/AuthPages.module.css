@@ -73,7 +73,7 @@
   -moz-appearance: none; /* Remove default arrow on Firefox */
   appearance: none; /* Remove default arrow */
   width: 100%;
-  padding: 10px 10px 10px 55px; /* Adjust padding-left to clear the icon. */
+  padding: 10px 10px 10px 50px; /* Adjust padding-left to clear the icon. */
   background-color: var(--color-input-background);
   border: 1px solid var(--color-input-border);
   border-radius: var(--border-radius-input);
