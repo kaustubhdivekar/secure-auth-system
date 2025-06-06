@@ -119,7 +119,6 @@ const ContactUsPage = () => {
 
                     {/* Privacy Statement - you can decide if this also fits the AuthPages.module.css styles or needs its own */}
                     <p className={authStyles.authLinkMuted} style={{ marginTop: '20px', textAlign: 'center' }}>
-                        Your information will be stored according to our Privacy Policy.
                         We respect your privacy and will never share your data with third parties without your consent.
                     </p>
                 </form>
