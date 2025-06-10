@@ -4,6 +4,7 @@ const dotenv = require('dotenv');   // For loading environment variables from a 
 const cors = require('cors');       // For enabling Cross-Origin Resource Sharing
 const authRoutes = require('./routes/authRoutes'); // Import the auth router
 const contactRoutes = require('./routes/contactRoutes'); // Import the contact router
+const blogRoutes = require('./routes/blogRoutes'); // Import the blog router
 const { errorHandler } = require('./middleware/errorMiddleware'); // Import the error router
 const rateLimit = require('express-rate-limit'); // Import express rate limit
 const helmet = require('helmet');
@@ -77,8 +78,8 @@ app.use('/api/auth', authRoutes);
 // Example: app.use('/api/users', require('./routes/userRoutes'));
 // Mount routes
 app.use('/api/auth', authRoutes);
-app.use('/api/contact', contactRoutes); // NEW: Use /api prefix for contact routes
-// app.use('/api', blogRoutes); // Will be added later
+app.use('/api/contact', contactRoutes);
+app.use('/api/blogs', blogRoutes);
 // app.use('/api', propertyRoutes); // Will be added later
 
 // 9. Global Error Handling Middleware

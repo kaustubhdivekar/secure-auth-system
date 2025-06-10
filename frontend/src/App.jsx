@@ -16,6 +16,10 @@ const UnauthorizedPage = lazy(() => import('./pages/Status/UnauthorizedPage.jsx'
 const NotFoundPage = lazy(() => import('./pages/Status/NotFoundPage.jsx'));
 const ContactUsPage = lazy(() => import('./pages/ContactUsPage.jsx'));
 // const AdminPage = lazy(() => import('./pages/Admin/AdminPage.jsx'));
+const BlogListingPage = lazy(() => import('./pages/BlogListingPage.jsx'));
+const BlogDetailsPage = lazy(() => import('./pages/BlogDetailsPage.jsx'));
+const CreateBlogPage = lazy(() => import('./pages/CreateBlogPage.jsx')); // Content Creator page
+
 
 const LoadingFallback = () => <div style={{ textAlign: 'center', color: 'var(--color-text-primary)', marginTop: '60px', fontSize: '1.5rem' }}>Loading Page...</div>;
 
@@ -38,10 +42,12 @@ function App() {
           <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
           <Route path="/unauthorized" element={<UnauthorizedPage />} />
           <Route path="/contact" element={<ContactUsPage />} />
+          <Route path="/blogs" element={<BlogListingPage />} />
+          <Route path="/blogs/:id" element={<BlogDetailsPage />} />
 
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} /> {/* Dashboard is protected */}
           </Route>
 
           {/* Example Role-Specific Protected Route */}
@@ -49,6 +55,11 @@ function App() {
             <Route path="/admin" element={<AdminPage />} />
           </Route> */}
 
+          <Route element={<ProtectedRoute allowedRoles={['Content Creator']} />}>
+            <Route path="/blogs/create" element={<CreateBlogPage />} />
+          </Route>
+          
+          {/* Catch-all for 404 */}
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

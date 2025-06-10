@@ -32,13 +32,13 @@ minlength: [8, 'Password must be at least 8 characters long'],
 select: false, // By default, don't return password field when querying users
 },
 role: {
-type: String,
-required: true,
-enum: { // Role must be one of these values
-values: ['Buyer', 'Tenant', 'Owner', 'User', 'Admin', 'Content Creator'],
-message: '{VALUE} is not a supported role',
-},
-default: 'User', // Default role if not specified
+  type: String,
+  required: true,
+  enum: { // Role must be one of these values
+    values: ['Buyer', 'Tenant', 'Owner', 'User', 'Admin', 'Content Creator'],
+    message: '{VALUE} is not a supported role',
+  },
+  default: 'User', // Default role if not specified
 }, 
 
     // Account Status & Verification

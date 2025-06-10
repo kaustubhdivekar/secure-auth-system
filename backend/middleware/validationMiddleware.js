@@ -1,3 +1,4 @@
+// backend/middleware/validationMiddleware.js
 const { body, validationResult } = require('express-validator');
 
 // Helper to format validation errors
