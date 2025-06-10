@@ -26,10 +26,6 @@ exports.protect = async (req, res, next) => {
           // User belonging to token no longer exists
           return res.status(401).json({ success: false, message: 'Not authorized, user not found' });
       }
-
-      // Only log role and type if user is found to prevent errors
-      console.log('Backend protect middleware - Fetched user role:', req.user.role);
-      console.log('Backend protect middleware - Type of fetched user role:', typeof req.user.role);
       
       next(); // Proceed to the next middleware or route handler
     } catch (error) {

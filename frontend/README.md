@@ -99,7 +99,9 @@ The UI design is directly inspired by the provided "To-Let Globe" design samples
 ### 5. Live Demo
 
 Explore the live frontend application:
-* **Frontend:** [https://to-let-globe-rho.vercel.app/](https://to-let-globe-rho.vercel.app/) ---
+* **Frontend:** [https://to-let-globe-rho.vercel.app/](https://to-let-globe-rho.vercel.app/) 
+
+---
 
 ### 6. Prerequisites
 

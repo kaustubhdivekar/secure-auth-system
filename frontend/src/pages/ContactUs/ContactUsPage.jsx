@@ -1,15 +1,19 @@
-// frontend/src/pages/ContactUsPage.jsx
+// frontend/src/pages/ContactUs/ContactUsPage.jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import contactService from '../services/contactService'; // Adjust path if necessary
+import contactService from '../../services/contactService'; // Adjust path if necessary
 
 // Import AuthLayout for centering the page content
-import AuthLayout from '../components/layout/AuthLayout';
+import AuthLayout from '../../components/layout/AuthLayout';
 // Import InputField for consistent input styling
-import InputField from '../components/common/InputField/InputField';
+import InputField from '../../components/common/InputField/InputField';
+
 // Import shared AuthPages styles for button and container classes
-import authStyles from './Auth/AuthPages.module.css'; // Renamed to avoid conflict with ContactUsPage.module.css
+import authStyles from '../Auth/AuthPages.module.css'; // Renamed to avoid conflict with ContactUsPage.module.css
+
+// Import ContactUsPage's specific styles
+import contactStyles from './ContactUsPage.module.css'; // <--- NEW IMPORT
 
 // Icons for input fields
 import { FaUserAlt, FaEnvelope, FaPhone, FaTag, FaEdit } from 'react-icons/fa'; // Added icons for contact form
@@ -32,12 +36,12 @@ const ContactUsPage = () => {
             <div className={authStyles.authFormContainerWithGradientBorder}> {/* Reusing the outer border container */}
                 <form onSubmit={handleSubmit(onSubmit)} className={authStyles.authForm}> {/* Reusing the inner form styling */}
                     <h2 className={authStyles.title}>Contact Us</h2> {/* Reusing the title style */}
-                    <p className={authStyles.subheading}>We'd love to hear from you!</p> {/* You might need to add this subheading style to AuthPages.module.css or keep it here */}
+                    <p className={contactStyles.subheading}>We'd love to hear from you!</p> {/* Using contactStyles for subheading */}
 
                     {/* Name Input */}
                     <InputField
                         id="name"
-                        label="Name" // You can add labels directly or use placeholders
+                        label="Name"
                         placeholder="Your Name"
                         icon={<FaUserAlt />}
                         error={errors.name?.message}
@@ -68,13 +72,12 @@ const ContactUsPage = () => {
                         label="Phone Number (Optional)"
                         placeholder="Your Phone Number"
                         icon={<FaPhone />}
-                        error={errors.phone?.message} // Although optional, errors for format might still be useful
+                        error={errors.phone?.message}
                         {...register('phone')}
                     />
 
                     {/* Topic Select */}
-                    {/* Using a regular select for now as InputField is not built for selects,
-                        but apply common styling classes. */}
+                    {/* Using a regular select and applying common styling classes from AuthPages.module.css. */}
                     <div className={authStyles.inputGroup}> {/* Reusing inputGroup for icon positioning */}
                         <FaTag className={authStyles.inputIcon} /> {/* Icon for select */}
                         <select
@@ -92,8 +95,7 @@ const ContactUsPage = () => {
                     </div>
 
                     {/* Query/Message Textarea */}
-                    {/* InputField component would need modification to support textarea,
-                        so using regular textarea with common styling classes for now. */}
+                    {/* Using regular textarea with common styling classes from AuthPages.module.css. */}
                     <div className={authStyles.inputGroup}> {/* Reusing inputGroup */}
                         <FaEdit className={authStyles.inputIcon} style={{ top: '20px', transform: 'translateY(0)' }}/> {/* Adjust icon position for textarea */}
                         <textarea
@@ -117,8 +119,8 @@ const ContactUsPage = () => {
                         Send Message
                     </button>
 
-                    {/* Privacy Statement - you can decide if this also fits the AuthPages.module.css styles or needs its own */}
-                    <p className={authStyles.authLinkMuted} style={{ marginTop: '20px', textAlign: 'center' }}>
+                    {/* Privacy Statement */}
+                    <p className={contactStyles.privacyStatement}> {/* Using contactStyles for privacy statement */}
                         We respect your privacy and will never share your data with third parties without your consent.
                     </p>
                 </form>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import './BlogDetailsPage.css'; // Create this CSS file for styling
+import styles from './BlogPages.module.css'; 
 
 const BlogDetailsPage = () => {
     const { id } = useParams();
@@ -40,19 +40,19 @@ const BlogDetailsPage = () => {
     }
 
     return (
-        <div className="blog-details-container">
+        <div className={styles['blog-details-container']}>
             {blog.imageUrl && (
-                <img src={blog.imageUrl} alt={blog.title} className="blog-details-image" />
+                <img src={blog.imageUrl} alt={blog.title} className={styles['blog-details-image']} />
             )}
             <h1>{blog.title}</h1>
-            <p className="blog-details-meta">
+            <p className={styles['blog-details-meta']}>
                 By {blog.name} ({blog.role}) on {new Date(blog.createdAt).toLocaleDateString()}
-                <span className="blog-details-stats">
+                <span className={styles['blog-details-stats']}>
                     {' '}❤️ {blog.likes} 👁️ {blog.views}
                 </span>
             </p>
-            <div className="blog-details-content" dangerouslySetInnerHTML={{ __html: blog.content }}></div>
-            <button onClick={() => navigate('/blogs')} className="back-to-blogs-button">Back to Blogs</button>
+            <div className={styles['blog-details-content']} dangerouslySetInnerHTML={{ __html: blog.content }}></div>
+            <button onClick={() => navigate('/blogs')} className={styles['back-to-blogs-button']}>Back to Blogs</button>
         </div>
     );
 };

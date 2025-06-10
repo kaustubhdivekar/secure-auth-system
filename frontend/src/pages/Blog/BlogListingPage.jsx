@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import './BlogListingPage.css';
+import styles from'./BlogPages.module.css';
 
 const BlogListingPage = () => {
     const [blogs, setBlogs] = useState([]);
@@ -56,18 +56,18 @@ const BlogListingPage = () => {
     };
 
     return (
-        <div className="blog-listing-container">
+        <div className={styles['blog-listing-container']}>
             <h1>Our Blog</h1>
 
-            <div className="sort-buttons">
+            <div className={styles['sort-buttons']}>
                 <button
-                    className={sortBy === 'latest' ? 'active' : ''}
+                    className={`${styles.button} ${sortBy === 'latest' ? styles.active : ''}`}
                     onClick={() => handleSortChange('latest')}
                 >
                     Latest
                 </button>
                 <button
-                    className={sortBy === 'trending' ? 'active' : ''}
+                    className={`${styles.button} ${sortBy === 'trending' ? styles.active : ''}`}
                     onClick={() => handleSortChange('trending')}
                 >
                     Trending
@@ -78,36 +78,36 @@ const BlogListingPage = () => {
                 <p>Loading blogs...</p>
             ) : (
                 <>
-                    <div className="blog-grid">
+                    <div className={styles['blog-grid']}>
                         {blogs.map((blog) => (
-                            <div key={blog._id} className="blog-card">
+                            <div key={blog._id} className={styles['blog-card']}>
                                 {blog.imageUrl && (
-                                    <img src={blog.imageUrl} alt={blog.title} className="blog-image" />
+                                    <img src={blog.imageUrl} alt={blog.title} className={styles['blog-image']} />
                                 )}
-                                <div className="blog-card-content">
+                                <div className={styles['blog-card-content']}>
                                     <h2>{blog.title}</h2>
-                                    <p className="blog-intro">{blog.intro}</p>
-                                    <p className="blog-meta">
+                                    <p className={styles['blog-intro']}>{blog.intro}</p>
+                                    <p className={styles['blog-meta']}>
                                         By {blog.name} ({blog.role}) on {new Date(blog.createdAt).toLocaleDateString()}
                                     </p>
-                                    <div className="blog-stats">
+                                    <div className={styles['blog-stats']}>
                                         <span>❤️ {blog.likes}</span>
                                         <span>👁️ {blog.views}</span>
                                     </div>
-                                    <div className="blog-actions">
-                                        <Link to={`/blogs/${blog._id}`} className="read-more-button">Read More</Link>
-                                        <button onClick={() => handleLike(blog._id)} className="like-button">Like</button>
+                                    <div className={styles['blog-actions']}>
+                                        <Link to={`/blogs/${blog._id}`} className={styles['read-more-button']}>Read More</Link>
+                                        <button onClick={() => handleLike(blog._id)} className={styles['like-button']}>Like</button>
                                     </div>
                                 </div>
                             </div>
                         ))}
                     </div>
-                    <div className="pagination">
+                    <div className={styles.pagination}>
                         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                             <button
                                 key={page}
                                 onClick={() => handlePageChange(page)}
-                                className={page === currentPage ? 'active' : ''}
+                                className={`${styles.pageButton} ${page === currentPage ? styles.active : ''}`}
                             >
                                 {page}
                             </button>

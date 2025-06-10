@@ -14,11 +14,11 @@ const VerifyEmailPage = lazy(() => import('./pages/Auth/VerifyEmailPage.jsx'));
 const DashboardPage = lazy(() => import('./pages/Dashboard/DashboardPage.jsx'));
 const UnauthorizedPage = lazy(() => import('./pages/Status/UnauthorizedPage.jsx'));
 const NotFoundPage = lazy(() => import('./pages/Status/NotFoundPage.jsx'));
-const ContactUsPage = lazy(() => import('./pages/ContactUsPage.jsx'));
+const ContactUsPage = lazy(() => import('./pages/ContactUs/ContactUsPage.jsx'));
 // const AdminPage = lazy(() => import('./pages/Admin/AdminPage.jsx'));
-const BlogListingPage = lazy(() => import('./pages/BlogListingPage.jsx'));
-const BlogDetailsPage = lazy(() => import('./pages/BlogDetailsPage.jsx'));
-const CreateBlogPage = lazy(() => import('./pages/CreateBlogPage.jsx')); // Content Creator page
+const BlogListingPage = lazy(() => import('./pages/Blog/BlogListingPage.jsx'));
+const BlogDetailsPage = lazy(() => import('./pages/Blog/BlogDetailsPage.jsx'));
+const CreateBlogPage = lazy(() => import('./pages/Blog/CreateBlogPage.jsx')); // Content Creator page
 
 
 const LoadingFallback = () => <div style={{ textAlign: 'center', color: 'var(--color-text-primary)', marginTop: '60px', fontSize: '1.5rem' }}>Loading Page...</div>;

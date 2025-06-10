@@ -1,7 +1,15 @@
 /* frontend/src/pages/ContactUsPage.module.css */
 
-/* Remove or simplify styles that are now handled by AuthLayout and AuthPages.module.css */
-/* For instance, the .container styles for max-width, margin, padding, background, border, shadow, and gradient are likely redundant if using AuthLayout. */
+/*
+   This file is intentionally lean.
+   Most common form aesthetics (inputField, selectField, submitButton,
+   authFormContainerWithGradientBorder, authForm, title)
+   are handled by InputField component, global CSS variables,
+   or by importing classes from AuthPages.module.css in ContactUsPage.jsx.
+
+   This module contains styles unique to the ContactUsPage that are
+   not covered by shared components or global/auth styles.
+*/
 
 /* .container should be mostly empty or contain only unique page-level styling if needed */
 /* .container { */
@@ -28,6 +36,7 @@
     font-size: 1.2rem;
     color: var(--color-text-secondary);
     margin-bottom: 30px;
+    text-align: center;
 }
 
 /* Remove .form, .formGroup, label, input, select, textarea, .error styles if InputField and authStyles are used */
@@ -39,6 +48,7 @@
     color: var(--color-text-secondary);
     margin-top: 30px;
     line-height: 1.5;
+    text-align: center;
 }
 
 /* Responsive Adjustments: Adjust as needed, but if the main form container is responsive through AuthPages.module.css, these might be minimal */
@@ -51,11 +61,17 @@
     /* .heading {
         font-size: 2.2rem;
     }
+     */
 
     .subheading {
         font-size: 1rem;
-    } */
+        margin-bottom: 20px; /* Slightly less margin on smaller screens */
+    }
 
+    .privacyStatement {
+        font-size: 0.8rem;
+        margin-top: 20px;
+    }
     /* .submitButton { */
         /* width: 100%; */
     /* } */
