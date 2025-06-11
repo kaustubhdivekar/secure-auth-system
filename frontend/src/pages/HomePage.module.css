@@ -7,7 +7,7 @@
   /* Calculate height relative to the viewport, subtracting the navbar height. */
   /* This ensures the content of *each section* is visible without an inner scrollbar. */
   min-height: calc(100vh - var(--navbar-height)); /* Each section takes full viewport height minus navbar */
-  height: calc(100vh - var(--navbar-height)); /* Use height to ensure full fill for snapping */
+  /* height: calc(100vh - var(--navbar-height)); Use height to ensure full fill for snapping */
   display: flex;
   flex-direction: column;
   justify-content: center; /* Vertically center content within each section */
@@ -29,14 +29,14 @@
 }
 
 .heroTitle {
-  font-size: 2.8rem;
+  font-size: 3.5rem;
   color: var(--color-text-primary);
   margin-bottom: var(--spacing-unit);
   font-weight: var(--font-weight-bold);
 }
 
 .heroSubtitle {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: var(--color-text-secondary);
   margin-bottom: calc(var(--spacing-unit) * 4);
   max-width: 600px;
@@ -154,7 +154,7 @@
   filter: grayscale(0%) brightness(100%); /* Color on hover */
 }
 
-/* Top Locations Section */
+/* Locations Section */
 .topLocationsSection {
   background-color: #0A0A0A; /* Reusing a dark shade */
   color: var(--color-text-primary);
@@ -247,16 +247,35 @@
 }
 
 /* Media Queries for Responsiveness */
+
 @media (max-width: 768px) {
   .section {
-    padding: 15px;
+    padding: 40px 15px;
   }
   .heroTitle {
     font-size: 2rem;
   }
   .heroSubtitle {
+    font-size: 1.2rem;
+    /* margin-bottom: calc(var(--spacing-unit) * 2); */
+  }
+  .heroButton {
+    padding: 12px 25px;
     font-size: 1rem;
-    margin-bottom: calc(var(--spacing-unit) * 2);
+  }
+  .sectionHeading { font-size: 1.8rem; }
+  .servicesGrid, .partnersGrid, .universitiesGrid, .locationsGrid, .featuresSection {
+    grid-template-columns: 1fr; /* Stack on mobile */
+    gap: 20px;
+  }
+  .aboutText {
+    max-width: 100%;
+  }
+    .partnerLogo, .universityLogo {
+    height: 60px;
+  }
+    .locationImg {
+    height: 180px;
   }
   .authActions, .loggedInActions {
     flex-direction: column;
@@ -265,6 +284,18 @@
   .aboutContent {
     flex-direction: column; /* Stack elements vertically on smaller screens */
     text-align: center;
+    gap: calc(var(--spacing-unit) * 2); /* Adjust gap for stacking */
+  }
+  .aboutText h3 {
+   font-size: 1.2rem; /* Slightly smaller heading */
+   margin-bottom: calc(var(--spacing-unit) * 0.5); /* Reduced margin */
+  }
+  .aboutText p {
+   font-size: 0.7rem; /* Smaller body text */
+   line-height: 1.5; /* Slightly tighter line height */
+  }
+  .aboutImage { /* Remove padding on mobile */
+    padding-left: 0;
   }
   .aboutContent:nth-child(odd) { /* Reset alternating order */
     flex-direction: column;
@@ -272,4 +303,22 @@
   .serviceItem, .feature {
     width: 90%;
   }
+}
+
+@media (max-width: 480px) {
+    /* .heroTitle { font-size: 2rem; } */ /* Handled by global.css */
+    .heroSubtitle {
+        font-size: 1rem;
+    }
+    .sectionHeading { font-size: 1.5rem; }
+    .heroButton {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    .serviceItem h3 {
+        font-size: 1.4rem;
+    }
+    .aboutText h3 {
+        font-size: 1.5rem;
+    }
 }

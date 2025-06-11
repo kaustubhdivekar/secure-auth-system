@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+// import blogService from '../../services/blogService'; // Adjust path
 import styles from'./BlogPages.module.css';
+import { FaHeart, FaEye, FaCalendarAlt, FaUserEdit } from 'react-icons/fa';
 
 const BlogListingPage = () => {
     const [blogs, setBlogs] = useState([]);
@@ -10,18 +12,23 @@ const BlogListingPage = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [sortBy, setSortBy] = useState('latest'); // 'latest' or 'trending'
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+     const blogsPerPage = 6; // Example: 6 blogs per page
 
     const fetchBlogs = async (page, sortOrder) => {
         setLoading(true);
+        setError(null);
         try {
             const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/blogs`, {
-                params: { page, limit: 6, sortBy: sortOrder }
+                params: { page, limit: blogsPerPage, sortBy: sortOrder }
             });
             setBlogs(response.data.blogs);
             setCurrentPage(response.data.currentPage);
             setTotalPages(response.data.totalPages);
         } catch (error) {
             console.error('Error fetching blogs:', error);
+            setError('Failed to load blogs. Please try again later.');
             toast.error('Failed to load blogs.');
         } finally {
             setLoading(false);
@@ -33,8 +40,14 @@ const BlogListingPage = () => {
     }, [currentPage, sortBy]);
 
     const handlePageChange = (page) => {
+        if (page > 0 && page <= totalPages) {
         setCurrentPage(page);
+        }
     };
+
+    if (loading) return <div className={styles['blog-listing-container']} style={{ textAlign: 'center' }}>Loading blogs...</div>;
+    if (error) return <div className={styles['blog-listing-container']} style={{ textAlign: 'center', color: 'var(--color-error)' }}>{error}</div>;
+    if (blogs.length === 0) return <div className={styles['blog-listing-container']} style={{ textAlign: 'center' }}>No blogs found.</div>;
 
     const handleSortChange = (newSortBy) => {
         setSortBy(newSortBy);
@@ -57,7 +70,7 @@ const BlogListingPage = () => {
 
     return (
         <div className={styles['blog-listing-container']}>
-            <h1>Our Blog</h1>
+            <h1 className="main-heading">Our Blog</h1>
 
             <div className={styles['sort-buttons']}>
                 <button
@@ -75,7 +88,7 @@ const BlogListingPage = () => {
             </div>
 
             {loading ? (
-                <p>Loading blogs...</p>
+                <p className="subheading">Loading blogs...</p>
             ) : (
                 <>
                     <div className={styles['blog-grid']}>
@@ -91,8 +104,8 @@ const BlogListingPage = () => {
                                         By {blog.name} ({blog.role}) on {new Date(blog.createdAt).toLocaleDateString()}
                                     </p>
                                     <div className={styles['blog-stats']}>
-                                        <span>❤️ {blog.likes}</span>
-                                        <span>👁️ {blog.views}</span>
+                                        <span><FaHeart /> {blog.likes}</span>
+                                        <span><FaEye /> {blog.views}</span>
                                     </div>
                                     <div className={styles['blog-actions']}>
                                         <Link to={`/blogs/${blog._id}`} className={styles['read-more-button']}>Read More</Link>

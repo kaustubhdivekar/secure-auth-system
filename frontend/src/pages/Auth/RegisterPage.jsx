@@ -3,12 +3,17 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import authService from '../../services/authService';
+
+// Import shared AuthPages styles for button and container classes
 import styles from './AuthPages.module.css';
+// Import AuthLayout for centering the page content
 import AuthLayout from '../../components/layout/AuthLayout';
+// Import InputField for consistent input styling
 import InputField from '../../components/common/InputField/InputField';
+// Import Button for consistent input styling
 import Button from '../../components/common/Button/Button';
 import PasswordStrengthIndicator from '../../components/ui/PasswordStrengthIndicator/PasswordStrengthIndicator';
-import { FaUserAlt, FaEnvelope, FaLock, FaBriefcase } from 'react-icons/fa'; // Added FaBuilding for F/L Name
+import { FaUserAlt, FaEnvelope, FaLock, FaBriefcase } from 'react-icons/fa';
 
 const VALID_ROLES = ['Buyer', 'Tenant', 'Owner', 'User', 'Admin', 'Content Creator'];
 
@@ -18,7 +23,7 @@ const RegisterPage = () => {
   });
   const navigate = useNavigate();
   const [serverError, setServerError] = useState(null);
-  const passwordValue = watch('password', '');
+  const passwordValue = watch('password', ''); // Watch password field for confirmation validation
 
   const onSubmit = async (data) => {
     setServerError(null);
@@ -33,8 +38,8 @@ const RegisterPage = () => {
         email: data.email,
         password: data.password,
         role: data.role,
-        firstName: data.firstName, // Now mandatory in UI
-        lastName: data.lastName,   // Now mandatory in UI
+        firstName: data.firstName, 
+        lastName: data.lastName,   
       };
       const response = await authService.register(payload);
       if (response.success) {
@@ -55,11 +60,13 @@ const RegisterPage = () => {
     <AuthLayout>
       <div className={styles.authFormContainerWithGradientBorder}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.authForm} noValidate>
-          <h2 className={styles.title}>Create Account</h2>
+          <h2 className="main-heading">Register</h2>
+          <p className="subheading">Create your account</p>
           {serverError && <p className={styles.serverError}>{serverError}</p>}
 
           <InputField
             id="username"
+            label="Username"
             placeholder="Username"
             icon={<FaUserAlt />}
             error={errors.username?.message}
@@ -71,6 +78,7 @@ const RegisterPage = () => {
           {/* First Name - Made Mandatory */}
           <InputField
             id="firstName"
+            label="First Name"
             placeholder="First Name"
             icon={<FaUserAlt />} /* Using FaUserAlt, could use FaBuilding for a generic feel */
             error={errors.firstName?.message}
@@ -82,6 +90,7 @@ const RegisterPage = () => {
           {/* Last Name - Made Mandatory */}
           <InputField
             id="lastName"
+            label="Last Name"
             placeholder="Last Name"
             icon={<FaUserAlt />} /* Using FaUserAlt, could use FaBuilding for a generic feel */
             error={errors.lastName?.message}
@@ -92,6 +101,7 @@ const RegisterPage = () => {
           />
           <InputField
             id="email"
+            label="Email"
             type="email"
             placeholder="Email Address"
             icon={<FaEnvelope />}
@@ -103,6 +113,7 @@ const RegisterPage = () => {
           />
           <InputField
             id="password"
+            label="Password"
             type="password"
             placeholder="Password"
             icon={<FaLock />}
@@ -119,6 +130,7 @@ const RegisterPage = () => {
           {passwordValue && <PasswordStrengthIndicator password={passwordValue} />}
           <InputField
             id="confirmPassword"
+            label="Confirm Password"
             type="password"
             placeholder="Confirm Password"
             icon={<FaLock />}
@@ -132,6 +144,7 @@ const RegisterPage = () => {
             <FaBriefcase className={styles.inputIcon} /> {/* Icon for Role Select */}
             <select
               id="role"
+              label="Role"
               className={styles.selectField} // Apply selectField specific styling
               {...register('role', { required: 'Role is required' })}
             >

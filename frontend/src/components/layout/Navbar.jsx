@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import styles from './Navbar.module.css';
@@ -6,8 +6,8 @@ import styles from './Navbar.module.css';
 const Navbar = () => {
   const { isAuthenticated, logout, user } = useAuth();
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false); // State for mobile menu
 
-  // --- ADD THIS CONSOLE LOG ---
   useEffect(() => {
     console.log('Navbar - isAuthenticated:', isAuthenticated);
     console.log('Navbar - user:', user);
@@ -18,12 +18,21 @@ const Navbar = () => {
       console.log('Navbar - Is user.role === "Content Creator"?', user.role === 'Content Creator'); // Check for common variations
     }
   }, [isAuthenticated, user]);
-  // --- END CONSOLE LOG ---
 
   const handleLogout = () => {
     logout();
     navigate('/login');
+    setMenuOpen(false); // Close menu on logout
   };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
 
   // Basic "TO-LET" logo as text, replace with an image if you have one
   const Logo = () => (
@@ -36,12 +45,22 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       <div className={styles.navContainer}>
         <Logo />
-        <div className={styles.navLinks}>
+
+        {/* Hamburger/Close Icon */}
+        <div className={styles.menuToggle} onClick={toggleMenu}>
+          <div className={menuOpen ? `${styles.hamburger} ${styles.open}` : styles.hamburger}></div>
+          <div className={menuOpen ? `${styles.hamburger} ${styles.open}` : styles.hamburger}></div>
+          <div className={menuOpen ? `${styles.hamburger} ${styles.open}` : styles.hamburger}></div>
+        </div>
+
+        <div className={`${styles.navLinks} ${menuOpen ? styles.open : ''}`}>
+        {/* <div className={styles.navLinks}> */}
           <NavLink
             to="/"
             className={({ isActive }) =>
               isActive ? `${styles.navLink} ${styles.activeNavLink}` : styles.navLink
             }
+            onClick={closeMenu} // Close menu on link click
           >
             Home
           </NavLink>
@@ -50,6 +69,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               isActive ? `${styles.navLink} ${styles.activeNavLink}` : styles.navLink
             }
+            onClick={closeMenu}
           >
             Service
           </NavLink>
@@ -58,6 +78,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               isActive ? `${styles.navLink} ${styles.activeNavLink}` : styles.navLink
             }
+            onClick={closeMenu}
           >
             Blog
           </NavLink>
@@ -68,6 +89,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               isActive ? `${styles.navLink} ${styles.activeNavLink}` : styles.navLink
             }
+            onClick={closeMenu}
           >
             Add Blog
           </NavLink>)}
@@ -76,6 +98,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               isActive ? `${styles.navLink} ${styles.activeNavLink}` : styles.navLink
             }
+            onClick={closeMenu}
           >
             Contact
           </NavLink>
@@ -84,6 +107,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               isActive ? `${styles.navLink} ${styles.activeNavLink}` : styles.navLink
             }
+            onClick={closeMenu}
           >
             About
           </NavLink>
@@ -92,6 +116,7 @@ const Navbar = () => {
             className={({ isActive }) =>
               isActive ? `${styles.navLink} ${styles.activeNavLink}` : styles.navLink
             }
+            onClick={closeMenu}
           >
             Property Listing
           </NavLink>
@@ -103,6 +128,7 @@ const Navbar = () => {
               className={({isActive}) => 
                 isActive ? `${styles.navLink} ${styles.activeNavLink}` : styles.navLink
             }
+            onClick={closeMenu}
           >
             Login
           </NavLink>

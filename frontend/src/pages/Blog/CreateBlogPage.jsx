@@ -5,7 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import Quill's CSS
-import styles from './BlogPages.module.css';
+
+// import blogService from '../../services/blogService';
+import styles from './BlogPages.module.css'; // Blog specific styles
 
 const CreateBlogPage = () => {
     const navigate = useNavigate();
@@ -85,7 +87,7 @@ const CreateBlogPage = () => {
 
     return (
         <div className={styles['create-blog-container']}>
-            <h1>Create Blog</h1>
+            <h1 className="main-heading">Create Blog</h1>
             <form onSubmit={handleSubmit} className={styles['create-blog-form']}>
                 <div className={styles['form-group']}>
                     <label htmlFor="name">Name</label>

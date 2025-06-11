@@ -2,21 +2,20 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import contactService from '../../services/contactService'; // Adjust path if necessary
+import contactService from '../../services/contactService';
 
-// Import AuthLayout for centering the page content
-import AuthLayout from '../../components/layout/AuthLayout';
 // Import InputField for consistent input styling
 import InputField from '../../components/common/InputField/InputField';
 
-// Import shared AuthPages styles for button and container classes
-import authStyles from '../Auth/AuthPages.module.css'; // Renamed to avoid conflict with ContactUsPage.module.css
+// Import shared AuthPages styles for common input/button classes
+// We still need these for individual elements like InputField, select, textarea, and buttons.
+import authStyles from '../Auth/AuthPages.module.css';
 
-// Import ContactUsPage's specific styles
+// Import ContactUsPage's specific container and form wrapper styles
 import contactStyles from './ContactUsPage.module.css'; // <--- NEW IMPORT
 
 // Icons for input fields
-import { FaUserAlt, FaEnvelope, FaPhone, FaTag, FaEdit } from 'react-icons/fa'; // Added icons for contact form
+import { FaUserAlt, FaEnvelope, FaPhone, FaTag, FaEdit } from 'react-icons/fa';
 
 const ContactUsPage = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -32,12 +31,12 @@ const ContactUsPage = () => {
     };
 
     return (
-        <AuthLayout> {/* Wrap the content with AuthLayout for centering and consistent background */}
-            <div className={authStyles.authFormContainerWithGradientBorder}> {/* Reusing the outer border container */}
-                <form onSubmit={handleSubmit(onSubmit)} className={authStyles.authForm}> {/* Reusing the inner form styling */}
-                    <h2 className={authStyles.title}>Contact Us</h2> {/* Reusing the title style */}
-                    <p className={contactStyles.subheading}>We'd love to hear from you!</p> {/* Using contactStyles for subheading */}
+        <div className={contactStyles['contact-us-container']}> {/* New wider page container */}
+            <h1 className="main-heading">Contact Us</h1> {/* Using new heading style */}
+            <p className="subheading">We'd love to hear from you!</p> {/* Using specific subheading style */}
 
+            <div className={contactStyles['contact-form-wrapper']}> {/* New wrapper for the form and its gradient border */}
+                <form onSubmit={handleSubmit(onSubmit)} className={authStyles.authForm}> {/* Reuse authForm for inner flex layout properties, or remove if contact-form-wrapper handles it fully */}
                     {/* Name Input */}
                     <InputField
                         id="name"
@@ -77,12 +76,13 @@ const ContactUsPage = () => {
                     />
 
                     {/* Topic Select */}
-                    {/* Using a regular select and applying common styling classes from AuthPages.module.css. */}
-                    <div className={authStyles.inputGroup}> {/* Reusing inputGroup for icon positioning */}
+                    {/* Using a regular select for now as InputField is not built for selects,
+                        but apply common styling classes from authStyles. */}
+                    <div className={authStyles.inputGroup}> {/* Reusing inputGroup for icon positioning and spacing */}
                         <FaTag className={authStyles.inputIcon} /> {/* Icon for select */}
                         <select
                             id="topic"
-                            className={`${authStyles.selectField} ${errors.topic ? authStyles.inputError : ''}`} // Reusing selectField and inputError classes
+                            className={`${authStyles.selectField} ${errors.topic ? authStyles.inputError : ''}`}
                             {...register('topic', { required: 'Please select a topic' })}
                         >
                             <option value="">Select a topic</option>
@@ -95,14 +95,15 @@ const ContactUsPage = () => {
                     </div>
 
                     {/* Query/Message Textarea */}
-                    {/* Using regular textarea with common styling classes from AuthPages.module.css. */}
+                    {/* InputField component would need modification to support textarea,
+                        so using regular textarea with common styling classes for now. */}
                     <div className={authStyles.inputGroup}> {/* Reusing inputGroup */}
                         <FaEdit className={authStyles.inputIcon} style={{ top: '20px', transform: 'translateY(0)' }}/> {/* Adjust icon position for textarea */}
                         <textarea
                             id="message"
                             rows="5"
                             placeholder="Your Message"
-                            className={`${authStyles.inputField} ${authStyles.inputWithIcon} ${errors.message ? authStyles.inputError : ''}`} // Use inputField classes
+                            className={`${authStyles.inputField} ${authStyles.inputWithIcon} ${errors.message ? authStyles.inputError : ''}`}
                             {...register('message', {
                                 required: 'Message is required',
                                 maxLength: {
@@ -115,17 +116,17 @@ const ContactUsPage = () => {
                     </div>
 
                     {/* Send Message Button */}
-                    <button type="submit" className={authStyles.submitButtonFullWidth}> {/* Use the consistent button style */}
+                    <button type="submit" className={authStyles.submitButtonFullWidth}>
                         Send Message
                     </button>
 
-                    {/* Privacy Statement */}
-                    <p className={contactStyles.privacyStatement}> {/* Using contactStyles for privacy statement */}
+                    {/* Privacy Statement - using the new specific style */}
+                    <p className={contactStyles.privacyStatement}>
                         We respect your privacy and will never share your data with third parties without your consent.
                     </p>
                 </form>
             </div>
-        </AuthLayout>
+        </div>
     );
 };
 

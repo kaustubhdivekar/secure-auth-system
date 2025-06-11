@@ -36,8 +36,8 @@ const ForgotPasswordPage = () => {
     <AuthLayout>
       <div className={styles.authFormContainerWithGradientBorder}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.authForm} noValidate>
-          <h2 className={styles.title}>Forgot Password</h2>
-          <p className={styles.subtitle}>Enter your email address and we'll send you a link to reset your password.</p>
+          <h2 className="main-heading">Forgot Password</h2>
+          <p className="subheading">Enter your email address and we'll send you a link to reset your password.</p>
 
           {serverMessage.text && (
             <p className={serverMessage.type === 'success' ? styles.serverSuccess : styles.serverError}>

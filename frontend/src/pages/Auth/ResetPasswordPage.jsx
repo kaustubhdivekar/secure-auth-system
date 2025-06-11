@@ -50,7 +50,7 @@ const ResetPasswordPage = () => {
     <AuthLayout>
       <div className={styles.authFormContainerWithGradientBorder}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.authForm} noValidate>
-          <h2 className={styles.title}>Reset Password</h2>
+          <h2 className="main-heading">Reset Password</h2>
           {serverError && <p className={styles.serverError}>{serverError}</p>}
 
           <InputField

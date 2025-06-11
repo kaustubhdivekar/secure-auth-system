@@ -5,8 +5,14 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import authService from '../../services/authService';
 import { useAuth } from '../../contexts/AuthContext';
+
+
+// Import shared AuthPages styles for button and container classes
 import styles from './AuthPages.module.css'; // Shared styles
+// Import AuthLayout for centering the page content
 import AuthLayout from '../../components/layout/AuthLayout';
+// Import InputField for consistent input styling
+import InputField from '../../components/common/InputField/InputField';
 
 // Icons from react-icons
 import { FaUserAlt, FaLock } from 'react-icons/fa';
@@ -50,14 +56,17 @@ const LoginPage = () => {
   const pageContent = (
     <div className={styles.authFormContainerWithGradientBorder}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.authForm}>
-        <h2 className={styles.title}>Login</h2>
+        <h2 className="main-heading">Login</h2> 
+        <p className="subheading">Welcome back!</p>
         {serverError && <p className={styles.serverError}>{serverError}</p>}
 
         <div className={styles.inputGroup}>
           <FaUserAlt className={styles.inputIcon} />
-          <input
-            type="text"
-            placeholder="Username or Email"
+          <InputField
+            id="email"
+            type="email"
+            label="Username or Email"
+            placeholder="Enter your username or email"
             className={`${styles.inputField} ${errors.emailOrUsername ? styles.inputError : ''}`}
             {...register('emailOrUsername', { required: 'Username or Email is required' })}
           />
@@ -68,9 +77,11 @@ const LoginPage = () => {
 
         <div className={styles.inputGroup}>
           <FaLock className={styles.inputIcon} />
-          <input
+          <InputField
+            id="password"
             type="password"
-            placeholder="Password"
+            label="Password"
+            placeholder="Enter your password"
             className={`${styles.inputField} ${errors.password ? styles.inputError : ''}`}
             {...register('password', { required: 'Password is required' })}
           />

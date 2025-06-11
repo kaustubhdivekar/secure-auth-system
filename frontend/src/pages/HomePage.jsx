@@ -14,7 +14,7 @@ const HomePage = () => {
   return (
     <div className={styles.homeContainer}>
       <header className={`${styles.heroSection} ${styles.section}`}>
-        <h1 className={styles.heroTitle}>Welcome to TO-LET</h1>
+        <h1 className={styles.heroTitle}>Welcome to TO-LET GLOBE</h1>
         <p className={styles.heroSubtitle}>
           Your ultimate destination for finding and listing rental properties.
         </p>
@@ -37,8 +37,8 @@ const HomePage = () => {
         )}
       </header>
 
-      <section className={`${styles.servicesSection} ${styles.section}`}> {/* NEW SECTION */}
-        <h2>Our Services</h2>
+      <section className={`${styles.servicesSection} ${styles.section}`}>
+        <h2 className="main-heading">Our Services</h2>
         <div className={styles.servicesGrid}>
           {/* Service items - replace with actual content/components */}
           <div className={styles.serviceItem}>
@@ -58,7 +58,7 @@ const HomePage = () => {
       </section>
 
       <section className={`${styles.aboutUsSection} ${styles.section}`}> {/* NEW SECTION */}
-        <h2>About Us</h2>
+        <h2 className="main-heading">About Us</h2>
         <div className={styles.aboutContent}>
           <div className={styles.aboutText}>
             <h3>Who We Are</h3>
@@ -70,13 +70,13 @@ const HomePage = () => {
           </div>
         </div>
         <div className={styles.aboutContent}>
-          <div className={styles.aboutImage}>
-            {/* Placeholder for Mission image */}
-            <img src="/path/to/mission-image.jpg" alt="Our Mission" className={styles.aboutImg}/>
-          </div>
           <div className={styles.aboutText}>
             <h3>Our Mission</h3>
             <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+          <div className={styles.aboutImage}>
+            {/* Placeholder for Mission image */}
+            <img src="/path/to/mission-image.jpg" alt="Our Mission" className={styles.aboutImg}/>
           </div>
         </div>
          <div className={styles.aboutContent}>
@@ -92,7 +92,7 @@ const HomePage = () => {
       </section>
 
       <section className={`${styles.hiringPartnersSection} ${styles.section}`}> {/* NEW SECTION */}
-        <h2>Our Hiring Partners</h2>
+        <h2 className="main-heading">Our Hiring Partners</h2>
         <div className={styles.partnersGrid}>
           {/* Placeholder for partner logos */}
           <img src="/path/to/partner1-logo.png" alt="Partner 1" className={styles.partnerLogo}/>
@@ -103,7 +103,7 @@ const HomePage = () => {
       </section>
 
       <section className={`${styles.topLocationsSection} ${styles.section}`}> {/* NEW SECTION */}
-        <h2>Top Locations</h2>
+        <h2 className="main-heading">Locations</h2>
         <div className={styles.locationsGrid}>
           {/* Placeholder for location images/cards */}
           <div className={styles.locationCard}>
@@ -119,7 +119,7 @@ const HomePage = () => {
       </section>
 
       <section className={`${styles.partneredUniversitiesSection} ${styles.section}`}> {/* NEW SECTION */}
-        <h2>Partnered Universities</h2>
+        <h2 className="main-heading">Partnered Universities</h2>
         <div className={styles.universitiesGrid}>
           {/* Placeholder for university logos */}
           <img src="/path/to/uni1-logo.png" alt="University 1" className={styles.universityLogo}/>
@@ -128,17 +128,9 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Your existing features and contact sections, moved down */}
-      <section className={`${styles.featuresSection} ${styles.section}`}>
-        <h2>Why Choose Us?</h2>
-        <div className={styles.feature}>Feature 1: Easy Listings</div>
-        <div className={styles.feature}>Feature 2: Verified Users</div>
-        <div className={styles.feature}>Feature 3: Great Support</div>
-      </section>
-
       <section className={`${styles.contactSection} ${styles.section}`}>
-        <h2>Contact Us</h2>
-        <p>We'd love to hear from you!</p>
+        <h2 className="main-heading">Contact Us</h2>
+        <p className="subheading">We'd love to hear from you!</p>
         {/* Placeholder for the Contact Form component or content */}
         {/* If you have a separate ContactForm component, you can import and render it here */}
         <div className={styles.contactFormPlaceholder}>

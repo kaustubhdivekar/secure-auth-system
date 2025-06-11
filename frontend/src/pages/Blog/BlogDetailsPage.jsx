@@ -1,8 +1,12 @@
+// frontend/src/pages/Blog/BlogDetailsPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+
+// import blogService from '../../services/blogService';
 import styles from './BlogPages.module.css'; 
+import { FaHeart, FaEye, FaCalendarAlt, FaUserEdit } from 'react-icons/fa';
 
 const BlogDetailsPage = () => {
     const { id } = useParams();
@@ -44,15 +48,15 @@ const BlogDetailsPage = () => {
             {blog.imageUrl && (
                 <img src={blog.imageUrl} alt={blog.title} className={styles['blog-details-image']} />
             )}
-            <h1>{blog.title}</h1>
+            <h1 className="main-heading">{blog.title}</h1>
             <p className={styles['blog-details-meta']}>
                 By {blog.name} ({blog.role}) on {new Date(blog.createdAt).toLocaleDateString()}
                 <span className={styles['blog-details-stats']}>
-                    {' '}❤️ {blog.likes} 👁️ {blog.views}
+                    {' '}<FaHeart /> {blog.likes} <FaEye /> {blog.views}
                 </span>
             </p>
             <div className={styles['blog-details-content']} dangerouslySetInnerHTML={{ __html: blog.content }}></div>
-            <button onClick={() => navigate('/blogs')} className={styles['back-to-blogs-button']}>Back to Blogs</button>
+            <button onClick={() => navigate('/blogs')} className={styles['back-to-blogs-button']}>Back</button>
         </div>
     );
 };

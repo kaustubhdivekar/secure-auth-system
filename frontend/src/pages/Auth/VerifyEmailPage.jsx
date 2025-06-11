@@ -41,9 +41,9 @@ const VerifyEmailPage = () => {
   return (
     <AuthLayout>
       <div className={styles.statusCard}> {/* Create .statusCard style in AuthPages.module.css */}
-        <h2 className={styles.title}>Email Verification</h2>
+        <h2 className="main-heading">Email Verification</h2>
         {verificationStatus.loading ? (
-          <p>Verifying your email...</p>
+          <p className="subheading">Verifying your email...</p>
         ) : (
           <>
             <p className={verificationStatus.success ? styles.serverSuccess : styles.serverError}>
