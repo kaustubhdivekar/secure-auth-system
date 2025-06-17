@@ -38,7 +38,7 @@
 
 ### 1. Project Overview
 
-This project is the **frontend application** for the To-Let Globe platform, providing a secure, intuitive, and user-friendly interface for property listings, user authentication, and content creation. It enables users to register, log in, verify their email, manage their passwords, and access protected dashboard areas. Additionally, it includes a dedicated contact form for direct communication with administrators and a module for content creators to publish blog posts.
+This project is the **frontend application** for the To-Let Globe platform, providing a secure, intuitive, and user-friendly interface for property listings, user authentication, and content creation. It enables users to register, log in, verify their email, manage their passwords, and access protected dashboard areas. Additionally, it includes a dedicated contact form for direct communication with administrators and a module for content creators to publish blog posts.Also present is a comprehensive property feature, allowing users to browse listings, and landlords to add and manage their properties.
 
 Built with **React (JavaScript)** and **Vite**, this frontend is designed for seamless integration with its corresponding Node.js/Express.js backend API. The UI follows a modern dark theme, highlighted by distinct cyan and gold gradient accents, consistent with the overall project branding.
 
@@ -62,9 +62,12 @@ Built with **React (JavaScript)** and **Vite**, this frontend is designed for se
 * User-friendly notifications for actions and errors (React Toastify).
 * Consistent UI/UX based on the "To-Let Globe" design samples.
 
-#### Property Management (Future Enhancements):
-* Dedicated sections and initial UI components for displaying property listings.
-* User interface elements for adding new property listings (for property owners/agents).
+#### Property Management:
+* **Property Listing Display:** Browse and view detailed property listings with high-quality images.
+* **Property Search & Filtering:** Intuitive search bar and advanced filters (location, price range, property type, amenities) to help users find ideal properties.
+* **Add New Property:** Dedicated forms for landlords to easily list new properties, including details and image uploads.
+* **Manage My Properties:** Dashboard section for landlords to view, edit, and delete their own property listings.
+* **Property Detail Pages:** Comprehensive pages for individual properties, showcasing all relevant information, image galleries, and contact options.
 
 ---
 
@@ -79,6 +82,7 @@ Built with **React (JavaScript)** and **Vite**, this frontend is designed for se
 * **UI Notifications:** React Toastify
 * **Icons:** React Icons
 * **Rich Text Editor:** React Quill
+* **Image Carousel/Gallery:** (e.g., `react-responsive-carousel` or custom implementation for property images)
 * **Styling:** CSS Modules, Global CSS with Variables
 * **Code Quality:** ESLint, Prettier
 
@@ -187,6 +191,7 @@ frontend/
 │   ├── components/
 │   │   ├── common/         # Reusable basic UI elements (Button, InputField, etc.)
 │   │   ├── layout/         # Layout components (Navbar, MainLayout, AuthLayout, ProtectedRoute)
+│   │   ├── properties/     # New: Components specific to property listings (PropertyCard, PropertyForm, ImageGallery)
 │   │   └── ui/             # Specific UI components (PasswordStrengthIndicator, BlogCard)
 │   ├── contexts/           # React Context API providers (e.g., AuthContext) for global state
 │   ├── hooks/              # Custom React hooks (e.g., useAuth)
@@ -194,6 +199,7 @@ frontend/
 │   │   ├── Auth/           # Authentication-related pages (Login, Register, Forgot/Reset Password)
 │   │   ├── Blogs/          # Blog-related pages (CreateBlogPage, BlogsListPage, BlogDetailPage)
 │   │   ├── Dashboard/      # User dashboard pages
+│   │   ├── Properties/     # New: Property-related pages (PropertiesListPage, PropertyDetailPage, CreatePropertyPage, EditPropertyPage)
 │   │   ├── Status/         # Pages for verification/error status (e.g., VerifyEmailPage, UnauthorizedPage)
 │   │   ├── ContactPage.jsx # Contact form page
 │   │   └── HomePage.jsx    # Main landing page
@@ -222,6 +228,10 @@ frontend/
 * **`ForgotPasswordPage.jsx`** & **`ResetPasswordPage.jsx`**: Forms for password management, maintaining the established dark theme and gradient accent style.
 * **`VerifyEmailPage.jsx`**: Handles the email verification token flow, displaying status to the user.
 * **`DashboardPage.jsx`**: A protected route that displays authenticated user information, styled consistently.
+* **`PropertiesListPage.jsx`**: **New.** Displays a grid or list of available property listings, with search and filtering controls.
+* **`PropertyDetailPage.jsx`**: **New.** Shows detailed information for a single property, including an image gallery, description, features, and contact landlord options.
+* **`CreatePropertyPage.jsx`**: **New.** A protected page for `Landlords` to input and submit new property listings, including uploading multiple images.
+* **`EditPropertyPage.jsx`**: **New.** A protected page for `Landlords` to modify their existing property listings.
 * **`ContactPage.jsx`**: A dedicated page containing the contact form, allowing users to send messages to administrators.
 * **`BlogsListPage.jsx`**: Displays a list of all published blog posts.
 * **`CreateBlogPage.jsx`**: A protected page for Content Creators to draft and submit new blog posts, featuring a rich text editor.

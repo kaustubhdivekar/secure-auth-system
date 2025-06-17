@@ -1,4 +1,4 @@
-// src/App.jsx
+// frontend/src/App.js
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from './components/layout/MainLayout.jsx';
@@ -19,7 +19,9 @@ const ContactUsPage = lazy(() => import('./pages/ContactUs/ContactUsPage.jsx'));
 const BlogListingPage = lazy(() => import('./pages/Blog/BlogListingPage.jsx'));
 const BlogDetailsPage = lazy(() => import('./pages/Blog/BlogDetailsPage.jsx'));
 const CreateBlogPage = lazy(() => import('./pages/Blog/CreateBlogPage.jsx')); // Content Creator page
-
+const PropertyListingPage = lazy(() => import('./pages/Property/PropertyListingPage.jsx'));
+const PropertyDetailsPage = lazy(() => import('./pages/Property/PropertyDetailsPage.jsx'));
+const AddPropertyPage = lazy(() => import('./pages/Property/AddPropertyPage.jsx'));
 
 const LoadingFallback = () => <div style={{ textAlign: 'center', color: 'var(--color-text-primary)', marginTop: '60px', fontSize: '1.5rem' }}>Loading Page...</div>;
 
@@ -44,6 +46,10 @@ function App() {
           <Route path="/contact" element={<ContactUsPage />} />
           <Route path="/blogs" element={<BlogListingPage />} />
           <Route path="/blogs/:id" element={<BlogDetailsPage />} />
+          <Route path="/properties" element={<PropertyListingPage />} />
+          <Route path="/properties/:id" element={<PropertyDetailsPage />} />
+          <Route path="/add-property" element={<AddPropertyPage />} />
+
 
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>

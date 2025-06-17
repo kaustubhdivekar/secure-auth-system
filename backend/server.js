@@ -1,3 +1,5 @@
+// backend/server.js 
+
 // 1. Import Core Modules
 const express = require('express'); // Express framework for building web applications
 const dotenv = require('dotenv');   // For loading environment variables from a .env file
@@ -5,10 +7,13 @@ const cors = require('cors');       // For enabling Cross-Origin Resource Sharin
 const authRoutes = require('./routes/authRoutes'); // Import the auth router
 const contactRoutes = require('./routes/contactRoutes'); // Import the contact router
 const blogRoutes = require('./routes/blogRoutes'); // Import the blog router
+const propertyRoutes = require('./routes/propertyRoutes'); // Import the property router
+const uploadRoutes = require('./routes/uploadRoutes'); // Import the upload router
 const { errorHandler } = require('./middleware/errorMiddleware'); // Import the error router
 const rateLimit = require('express-rate-limit'); // Import express rate limit
 const helmet = require('helmet');
 const morgan = require('morgan');
+// const path = require('path'); // For local photo uploads
 
 // 2. Load Environment Variables
 // This line loads variables from a .env file into process.env
@@ -64,6 +69,9 @@ app.use(express.json());
 // `extended: false` uses the querystring library (simpler).
 app.use(express.urlencoded({ extended: false }));
 
+// Serve static files from the local 'uploads' directory
+// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // 7. Define a Simple Test Route
 // A GET request to the root URL ('/') of our API
 app.get('/', (req, res) => {
@@ -75,12 +83,11 @@ app.get('/', (req, res) => {
 // 8. Define API Routes
 // All routes defined in authRoutes.js will be prefixed with /api/auth
 app.use('/api/auth', authRoutes);
-// Example: app.use('/api/users', require('./routes/userRoutes'));
 // Mount routes
-app.use('/api/auth', authRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/blogs', blogRoutes);
-// app.use('/api', propertyRoutes); // Will be added later
+app.use('/api/properties', propertyRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // 9. Global Error Handling Middleware
 app.use(errorHandler);

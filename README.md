@@ -26,6 +26,9 @@ To-Let Globe aims to simplify the renting and leasing process by providing a sec
 * **Contact Form:** Persistent storage for all submitted contact messages in MongoDB, with automated email notifications to both the sender and an administrator.
 * **CORS Configuration:** Secure and flexible cross-origin resource sharing setup.
 * **Centralized Error Handling:** Global error middleware for consistent API responses.
+* **Property Management:** Dedicated API for managing property listings, including creation, retrieval, updates, and deletion. Supports image uploads for properties.
+* **Search & Filtering:** Robust capabilities for searching properties by various criteria (location, price range, property type, etc.).
+
 
 ### Frontend
 * **Authentication Flow:** Intuitive user interfaces for registration, login, email verification, forgot password, and reset password.
@@ -36,6 +39,10 @@ To-Let Globe aims to simplify the renting and leasing process by providing a sec
 * **Responsive Design:** Optimised for seamless experience across various devices and screen sizes.
 * **Modern UI:** Dark theme with visually striking cyan/gold gradient accents for a contemporary look and feel.
 * **Blog Module:** Interface for content creators to add and manage blog posts.
+* **Property Listing & Detail:** User-friendly interfaces for viewing available properties, detailed property pages, and image galleries.
+* **Property Creation/Management:** Forms and interfaces for landlords to list new properties and manage their existing listings (edit, delete).
+* **Property Search & Filters:** Interactive search bar and filtering options to help users find suitable properties.
+
 
 ---
 
@@ -94,7 +101,7 @@ to-let-globe/
 │   │   ├── components/       # Reusable UI components
 │   │   ├── contexts/         # React Context for global state (e.g., Auth)
 │   │   ├── hooks/            # Custom React hooks
-│   │   ├── pages/            # Page-level components (Login, Dashboard, Contact, Blog)
+│   │   ├── pages/            # Page-level components (Login, Dashboard, Contact, Blog, PropertyList, PropertyDetail, CreateProperty)
 │   │   ├── services/         # API integration services (Axios configuration)
 │   │   ├── styles/           # Global CSS, theme variables, CSS modules
 │   │   ├── App.jsx           # Main application component with routing
@@ -111,7 +118,8 @@ to-let-globe/
 ## 🌐 Live Demo
 
 Explore the live application:
-* **Frontend:** [https://to-let-globe-rho.vercel.app/](https://to-let-globe-rho.vercel.app/) * **Backend API Status:** [https://to-let-globe-backend.onrender.com/api/status](https://to-let-globe-backend.onrender.com/api/status) 
+* **Frontend:** [https://to-let-globe-rho.vercel.app/](https://to-let-globe-rho.vercel.app/) 
+* **Backend API Status:** [https://to-let-globe-backend.onrender.com/api/status](https://to-let-globe-backend.onrender.com/api/status) 
 
 ---
 
@@ -125,6 +133,7 @@ Before you begin, ensure you have the following installed on your machine:
 * **A Render account:** [Sign up](https://render.com/) for a free tier (for backend deployment).
 * **A Vercel account:** [Sign up](https://vercel.com/) for a free tier (for frontend deployment).
 * **A transactional email service provider** (e.g., [SendGrid](https://sendgrid.com/), [Mailgun](https://www.mailgun.com/) for production emails) or [Ethereal.email](https://ethereal.email/) for development testing.
+* **A Cloudinary account:** [Sign up](https://cloudinary.com/) for a free tier (for cloud image storage CDN).
 
 ---
 
@@ -137,10 +146,9 @@ Follow these steps to get the To-Let Globe application running on your local mac
 Clone the monorepo to your local machine using Git:
 
 ```bash
-git clone [https://github.com/Your-GitHub-Username/your-repo-name.git](https://github.com/Your-GitHub-Username/your-repo-name.git)
+git clone [https://github.com/kaustubhdivekar/to-let-globe.git](https://github.com/kaustubhdivekar/to-let-globe.git)
 cd to-let-globe
 ```
-Note: Replace your-username with your actual GitHub username and your-repo-name with your repository name.
 
 ### 2. Environment Variables Setup
 You will need to set up .env files for both the backend and frontend applications. These files will contain sensitive information and local configurations, and are excluded from version control by .gitignore.
@@ -168,7 +176,6 @@ ETHEREAL_USER, ETHEREAL_PASS: Your Ethereal.email credentials for development em
 ADMIN_EMAIL: An email address to receive contact form notifications (can be another Ethereal.email address for development).
 FRONTEND_URL: http://localhost:5173 (for local frontend development).
 NODE_ENV: development
-
 ```
 
 Frontend Environment (frontend/.env)
@@ -258,6 +265,11 @@ POST /api/blogs - Create a new blog post (Protected: Content Creator)
 GET /api/blogs - Get all blog posts (Public)
 GET /api/blogs/:id - Get a single blog post by ID (Public)
 POST /api/blogs/:id/like - Like a blog post (Public)
+POST /api/properties - Create a new property listing (Protected: Landlord)
+GET /api/properties - Get all property listings (Public, with search/filter options)
+GET /api/properties/:id - Get a single property listing by ID (Public)
+PUT /api/properties/:id - Update a property listing (Protected: Landlord, Owner)
+DELETE /api/properties/:id - Delete a property listing (Protected: Landlord, Owner)
 
 🔑 Key Frontend Pages
 Home Page (/): The main landing page.
@@ -271,6 +283,10 @@ Contact Us (/contact): Form to send messages to administrators.
 Blog Listing (/blogs): Displays all available blog posts.
 Create Blog (/blogs/create): Protected route for Content Creators to add new blog posts.
 Blog Detail (/blogs/:id): Page to view a single blog post.
+Property Listing (/properties): Displays all available property listings with search and filter options.
+Property Detail (/properties/:id): Page to view a single property with details and images.
+Create Property (/properties/create): Protected route for Landlords to add new property listings.
+Manage Properties (/dashboard/properties): Protected area for Landlords to manage their own properties.
 Unauthorized (/unauthorized): Page for users attempting to access restricted content without proper authorization.
 
 🔒 Environment Variables Details
@@ -284,18 +300,29 @@ Important: Never commit your actual .env files to Git. .env.example serves as a 
 This project is configured for continuous deployment using Render for the backend and Vercel for the frontend.
 
 1. MongoDB Atlas Setup
+
 Create a free account on MongoDB Atlas.
+
 Create a new cluster (the free M0 tier is typically sufficient for personal projects).
+
 Configure Network Access: For development, you can temporarily add 0.0.0.0/0 (Allow Access From Anywhere), but for production, narrow this down to specific IP addresses (Render's static IPs) for enhanced security.
+
 Configure Database Access: Create a new database user with a strong username and password. Grant "Read and write to any database" privileges.
+
 Get your Connection String: Go to "Databases," click "Connect" for your cluster, choose "Connect your application," select Node.js driver, and copy the connection string. Replace <username>, <password>, and myFirstDatabase (or your chosen database name) in the string. This is your MONGODB_URI.
 
 2. Backend Deployment (Render)
+
 Push your entire monorepo code to a GitHub/GitLab/Bitbucket repository.
+
 Sign up/log in to Render.
+
 Click "New +" and select "Web Service".
+
 Connect your Git repository.
+
 Configure the service:
+
 Name: to-let-globe-backend (or similar)
 Region: Choose a region close to your users and database.
 Branch: main (or your deployment branch).
@@ -304,6 +331,7 @@ Build Command: npm install
 Start Command: npm start (or node server.js)
 Environment: Node
 Environment Variables: Add all necessary variables from your backend/.env file.
+
 NODE_ENV: production
 MONGODB_URI: Your MongoDB Atlas connection string.
 JWT_SECRET: The same strong secret used locally.
@@ -311,26 +339,38 @@ JWT_EXPIRES_IN: e.g., 1h
 EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_PASS, EMAIL_FROM_NAME, EMAIL_FROM_ADDRESS: Your production email service credentials.
 ADMIN_EMAIL: Your production admin email.
 FRONTEND_URL: Initially, use a placeholder or leave blank. You'll update this with your Vercel frontend URL after its deployment.
+
 Select the Free instance type if applicable.
+
 Click "Create Web Service". Render will build and deploy your backend. Note the .onrender.com URL provided.
 
 3. Frontend Deployment (Vercel)
+
 Push your entire monorepo code to GitHub/GitLab/Bitbucket.
+
 Sign up/log in to Vercel.
+
 Click "Add New..." and select "Project".
+
 Import your Git repository.
+
 Configure the project:
+
 Project Name: to-let-globe-frontend (or similar)
 Vercel usually auto-detects React (Vite) projects.
 Root Directory: frontend (Crucial for monorepos: tells Vercel where the frontend project resides).
 Build Command: Usually auto-detected as npm run build or vite build.
 Output Directory: Usually auto-detected as dist.
 Environment Variables:
+
 VITE_API_BASE_URL: Set this to your deployed Render backend URL (e.g., https://to-let-globe-backend.onrender.com/api).
+
 Click "Deploy". Vercel will build and deploy your frontend. Note the .vercel.app URL provided.
 
 4. Post-Deployment Updates
+
 Update Render Backend's FRONTEND_URL: Go back to your to-let-globe-backend service on Render. Edit the FRONTEND_URL environment variable to your Vercel frontend URL (e.g., https://to-let-globe-frontend.vercel.app). Trigger a redeploy on Render for this change to take effect.
+
 Verify Deployment: Open your Vercel frontend URL. Test all functionalities, especially login, registration, and the contact/blog forms, to ensure seamless communication with the deployed backend and database.
 
 ---
@@ -349,8 +389,11 @@ cd backend
 npm test
 ```
 Frontend Testing
+
 (Currently, explicit frontend tests are not configured. If implemented, they would typically use Vitest/Jest and React Testing Library.)
+
 To run (if configured):
+
 ```Bash
 
 cd frontend

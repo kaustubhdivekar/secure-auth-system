@@ -21,6 +21,7 @@
     * [Authentication & User Routes (`/api/auth`)](#authentication--user-routes-apiauth)
     * [Contact Routes (`/api/contact`)](#contact-routes-apicontact)
     * [Blog Routes (`/api/blogs`)](#blog-routes-apiblogs)
+    * [Property Routes (`/api/properties`)](#property-routes-apiproperties)
 * [7. Environment Variables](#7-environment-variables)
 * [8. Project Structure](#8-project-structure)
 * [9. Scripts](#9-scripts)
@@ -36,7 +37,7 @@
 
 ### 1. Project Overview
 
-This project provides a robust and secure backend API for the To-Let Globe application. It supports diverse user roles (e.g., `User`, `Admin`, `Content Creator`) and includes core functionalities such as user registration with email verification, login with JWT-based session management, secure password hashing, password reset functionality, role-based access control, a comprehensive contact form system, and a dynamic blog management module.
+This project provides a robust and secure backend API for the To-Let Globe application. It supports diverse user roles (e.g., `User`, `Admin`, `Content Creator`) and includes core functionalities such as user registration with email verification, login with JWT-based session management, secure password hashing, password reset functionality, role-based access control, a comprehensive contact form system, a dynamic blog management module and a dedicated module for managing property listings, including image uploads and search capabilities..
 
 The API is designed to be consumed by a modern frontend application (e.g., the [To-Let Globe React Frontend](../frontend/README.md)).
 
@@ -64,6 +65,15 @@ The API is designed to be consumed by a modern frontend application (e.g., the [
 * **Retrieve Blog Posts:** Endpoints to fetch single or multiple blog posts for display on the frontend.
 * **Like Functionality:** Allows users to "like" blog posts, tracking engagement.
 
+#### Property Management:
+* **Property Listing Creation:** API endpoint for authorized `Landlord` roles to add new property listings with comprehensive details.
+* **Property Image Uploads:** Supports uploading multiple images per property.
+* **Retrieve Property Listings:** Endpoints to fetch single or multiple property listings, with options for pagination, searching, and filtering.
+* **Property Updates:** Allows `Landlords` to update their existing property details.
+* **Property Deletion:** Provides functionality for `Landlords` to remove their property listings.
+* **Search & Filter:** Advanced API capabilities to search properties by location, price, type, amenities, and other criteria.
+
+
 #### API Management & Security:
 * **Input Validation:** Comprehensive server-side validation of all incoming data using `express-validator` to prevent malicious inputs and ensure data integrity.
 * **Centralized Error Handling:** Graceful and consistent error management for all API responses, improving debugging and client-side handling.
@@ -82,6 +92,8 @@ The API is designed to be consumed by a modern frontend application (e.g., the [
 * **ODM (Object Data Modeling):** Mongoose
 * **Authentication:** JSON Web Tokens (JWT) (`jsonwebtoken`)
 * **Password Hashing:** `bcryptjs`
+* **File Uploads:** Multer (for handling multipart/form-data, specifically property images)
+* **Cloud Storage (Optional/Future):** (e.g., Cloudinary, AWS S3 - for scalable image hosting)
 * **Email Sending:** Nodemailer (with Ethereal.email for development/testing)
 * **Input Validation:** `express-validator`
 * **Environment Variables:** `dotenv`
@@ -110,11 +122,9 @@ Before you begin, ensure you have the following installed on your local developm
 If you haven't already, clone the main To-Let Globe monorepo and navigate into the backend directory:
 
 ```bash
-git clone [https://github.com/Your-GitHub-Username/your-repo-name.git](https://github.com/Your-GitHub-Username/your-repo-name.git)
+git clone [https://github.com/kaustubhdivekar/to-let-globe.git](https://github.com/kaustubhdivekar/to-let-globe.git)
 cd to-let-globe/backend
 ```
-
-Note: Replace your-username with your actual GitHub username and your-repo-name with your repository name.
 
 Environment Setup
 This project uses a .env file to store environment-specific configurations and sensitive credentials.
@@ -175,10 +185,14 @@ POST	/reset-password/:token	Reset user's password using the provided token and n
 POST	/resend-verification-email	Request a new email verification link if the previous one expired.	Public
 GET	/me	Get details of the currently authenticated user based on their JWT.	Private (Requires JWT)
 GET	/admin-summary	Example endpoint requiring admin role for access.	Private (Admin Role)
+
 Contact Routes (/api/contact)
+
 Method	Endpoint	Description	Access
 POST	/	Submits a new contact message. Saves to DB and sends confirmation/notification emails.	Public
+
 Blog Routes (/api/blogs)
+
 Method	Endpoint	Description	Access
 POST	/	Create a new blog post.	Private (Content Creator)
 GET	/	Get all blog posts, optionally with pagination/filters.	Public
@@ -186,6 +200,17 @@ GET	/:id	Get a single blog post by its ID.	Public
 POST	/:id/like	Increment the like count for a specific blog post.	Public
 PUT	/:id	Update an existing blog post by its ID.	Private (Content Creator)
 DELETE	/:id	Delete a blog post by its ID.	Private (Content Creator)
+
+Property Routes (/api/properties)
+
+Method	Endpoint	Description	Access
+POST	/	Create a new property listing. Supports multi-part form data for images.	Private (Landlord)
+GET	/	Get all property listings. Supports query parameters for search and filtering (e.g., ?location=Pune&priceMax=50000).	Public
+GET	/:id	Get a single property listing by its ID.	Public
+PUT	/:id	Update an existing property listing by its ID.	Private (Landlord, Owner)
+DELETE	/:id	Delete a property listing by its ID.	Private (Landlord, Owner)
+GET	/my-properties	Get all property listings owned by the authenticated Landlord.	Private (Landlord)
+
 
 ---
 
@@ -222,6 +247,10 @@ Rate Limiting (Optional - using default values if not set):
 RATE_LIMIT_WINDOW_MS: Time window for rate limiting in milliseconds (e.g., 900000 for 15 minutes).
 RATE_LIMIT_MAX_REQUESTS: Maximum requests allowed per IP within the defined window (e.g., 100).
 
+CLOUDINARY_CLOUD_NAME="cloud_name"
+CLOUDINARY_API_KEY="api_key"
+CLOUDINARY_API_SECRET="secret"
+
 ---
 
 ### 8. Project Structure
@@ -233,28 +262,36 @@ backend/
 │   │   ├── authController.test.js
 │   │   ├── blogController.test.js
 │   │   └── contactController.test.js
+│   │   └── propertyController.test.js
 │   └── routes/
 │       ├── authRoutes.test.js
 │       ├── blogRoutes.test.js
 │       └── contactRoutes.test.js
+│       └── propertyRoutes.test.js
 ├── config/                     # Configuration files (e.g., database connection)
 │   └── db.js                   # MongoDB connection logic
+│   └── cloudinaryConfig.js     # Cloudinary connection logic
 ├── controllers/                # Business logic and request handlers
 │   ├── authController.js       # User authentication logic
 │   ├── blogController.js       # Blog post management logic
 │   └── contactController.js    # Contact form submission logic
+│   └── propertyController.js   # Property listing management logic
 ├── middleware/                 # Custom Express middleware functions
 │   ├── authMiddleware.js       # JWT validation, user retrieval, role-based access control
 │   ├── errorMiddleware.js      # Centralized error handling
+│   ├── uploadMiddleware.js     # Multer configuration for file uploads (e.g., property images)
 │   ├── validationMiddleware.js # Input validation via express-validator
 ├── models/                     # Mongoose schemas and models
 │   ├── User.js                 # User schema
 │   ├── Blog.js                 # Blog post schema
 │   └── Contact.js              # Contact message schema
+│   └── Property.js             # Property listing schema
 ├── routes/                     # Express route definitions
 │   ├── authRoutes.js           # Authentication related API routes
 │   ├── blogRoutes.js           # Blog management API routes
 │   └── contactRoutes.js        # Contact form API routes
+│   └── propertyRoutes.js       # Property listing API routes
+├── uploads/                    # Directory for uploaded files (e.g., property images)
 ├── utils/                      # Utility functions and services
 │   ├── emailService.js         # Nodemailer integration
 │   ├── generateToken.js        # JWT token generation

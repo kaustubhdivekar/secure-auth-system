@@ -1,3 +1,4 @@
+// frontend/src/components/layout/Navbar.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -112,7 +113,7 @@ const Navbar = () => {
             About
           </NavLink>
           <NavLink
-            to="/property-listing"
+            to="/properties"
             className={({ isActive }) =>
               isActive ? `${styles.navLink} ${styles.activeNavLink}` : styles.navLink
             }
@@ -120,6 +121,17 @@ const Navbar = () => {
           >
             Property Listing
           </NavLink>
+          {/* Only show 'Add Property' if logged in as a Owner */}
+          {isAuthenticated && user && user.role === 'Owner' && (
+          <NavLink
+            to="/add-property"
+            className={({ isActive }) =>
+              isActive ? `${styles.navLink} ${styles.activeNavLink}` : styles.navLink
+            }
+            onClick={closeMenu}
+          >
+            Add Property
+          </NavLink>)}
           {isAuthenticated ? (
             <button onClick={handleLogout} className={`${styles.navLink} ${styles.logoutButton}`}>Logout</button>
           ) : (
